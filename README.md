@@ -5,9 +5,9 @@ A C++ Graph Library
 
 Style Guidelines:
 naming rules:
-1. Classes CamelCase
+1. Classes: CamelCase
 2. member variables and member functions: lowercase separated by underscore.
-3. enums, macros and constant names - CAPITALS separated by underscore
+3. enums, macros and constant names: CAPITALS separated by underscore
 4. file names: lowercase separated by underscore.
 5. complete words in names unless too long.
 
