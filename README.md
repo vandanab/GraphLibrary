@@ -3,7 +3,7 @@ GraphLibrary
 
 A C++ Graph Library
 
-Style Guidelines:
+Style Guidelines: <br>
 naming rules: <br>
 1. Classes: CamelCase <br>
 2. member variables and member functions: lowercase separated by underscore. <br>
