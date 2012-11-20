@@ -1,20 +1,31 @@
 #Makefile
+CC=g++-4.7 -std=c++11
+TARGET=graph
+OBJDIR=objs
+OBJS=$(addprefix $(OBJDIR)/,graph.o edge.o node.o)
+SRCDIR=src
+INCDIR=include
 
-edge.o: edge.cpp edge.h
-	g++-4.7 -std=c++11 -g -c edge.cpp
+VPATH=./src
 
-node.o: node.cpp node.h edge.h
-	g++-4.7 -std=c++11 -g -c node.cpp
+## Default rule executed
+$(TARGET): $(OBJS) | $(OBJDIR)
+	$(CC) -g -o $(TARGET) $(OBJS)
 
-#node: node.o edge.o
-#	g++-4.7 -std=c++11 -g -o node node.o edge.o
+$(OBJDIR):
+	mkdir $(OBJDIR)
 
-graph.o: graph.cpp graph.h
-	g++-4.7 -std=c++11 -g -c graph.cpp
+$(OBJDIR)/edge.o: $(SRCDIR)/edge.cpp
+	$(CC) -g -I$(INCDIR) -c -o $@ $^ 
 
-graph: graph.o edge.o node.o
-	g++-4.7 -std=c++11 -g -o graph edge.o node.o graph.o
+$(OBJDIR)/node.o: $(SRCDIR)/node.cpp
+	$(CC) -g -I$(INCDIR) -c -o $@ $^ 
+
+$(OBJDIR)/graph.o: $(SRCDIR)/graph.cpp
+	$(CC) -g -I$(INCDIR) -c -o $@ $^ 
 
 clean:
-	#rm node node.o edge.o graph.o graph 
-	rm node.o edge.o graph.o graph 
+	rm graph $(OBJS)
+
+#node: node.o edge.o
+#	$(CC) -g -o node node.o edge.o
