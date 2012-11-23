@@ -39,7 +39,8 @@ namespace lib {
 		auto it = --edge_list.end();
 		edges.push_back(it);
 		(*nodes[node1_ordinal]).update_edges(it);
-		(*nodes[node2_ordinal]).update_edges(it);
+		//assuming unidirectional edges
+		//(*nodes[node2_ordinal]).update_edges(it);
 		return ord;
 	}
 
@@ -47,16 +48,30 @@ namespace lib {
 	void Graph<T>::remove_node(int node_ordinal) {
 		//make sure this whole operation is atomic
 		//remove the corresponding edges
+		delete_node_edges(node_ordinal);
 		node_list.erase(nodes[node_ordinal]);
 		//mark delete on the vector
 		nodes[nodes.begin() + node_ordinal] = nullptr;
 	}
 
+	//deletion assumes unidirectional edges
+	template<class T>
+	void Graph<T>::delete_node_edges(int node_ordinal) {
+		NodeIterType node_itr = nodes[node_ordinal];
+		auto edges = (*node_itr).get_edges();
+		for(auto i = edges.begin(); i != edges.end(); i++) {
+			edges[(*i).get_ordinal()] = nullptr;
+			edge_list.erase(*i);
+		}
+	}
+
+	//assumes unidirectional edges
 	template<class T>
 	void Graph<T>::remove_edge(int edge_ordinal) {
+		//remove itself from the vector in node object
+		int node_ordinal = (*edges[edge_ordinal]).get_source_node();
+		(*nodes[node_ordinal]).delete_edge(edge_ordinal);
 		edge_list.erase(edges[edge_ordinal]);
-		// remove the edge from its correspoinding nodes
-		// finding an edge in the node vector is a problem
 		edges[edge_ordinal] = nullptr;
 	}
 

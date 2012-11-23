@@ -19,22 +19,6 @@ namespace lib {
 		node2_ord = node2_ordinal;
 	}
 
-/*
-	Edge::Edge(Graph &g, int node1_ordinal, int node2_ordinal) {
-		if(node1_ordinal > 0 && node1_ordinal < g.nodes.size() && node2_ordinal > 0 && node2_ordinal < g.nodes.size()) {
-			this.node1_ord = node1_ordinal;
-			this.node2_ord = node2_ordinal;
-			this.set_node_pair(const_cast<list<Node<T>>::iterator>(g.nodes[node1_ordinal]), const_cast<list<Node<T>>::iterator>(g.nodes[node2_ordinal]));
-		} else {
-			//create nodes in the graph or throw exception
-		}
-	}
-
-	void Edge::set_node_pair(const list<Node<T>>::iterator n1, const list<Node<T>>::iterator n2) {
-		this.my_nodes(n1, n2);
-	}
-*/
-
 	// returns the index of the newly added attribute
 	int Edge::add_attribute(std::pair<std::string, std::string> attribute) {
 		attributes.push_back(attribute);

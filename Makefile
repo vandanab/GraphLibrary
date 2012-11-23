@@ -1,7 +1,6 @@
 #Makefile
-#CC=g++-4.7 -std=c++11
-CC=g++
-TARGET=graph
+CC=g++-4.7 -std=c++11
+TARGET=graph_test
 OBJDIR=objs
 OBJS=$(addprefix $(OBJDIR)/,graph.o edge.o node.o unit_test.o)
 SRCDIR=src

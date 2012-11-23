@@ -3,18 +3,16 @@
 #include<utility>
 #ifndef EDGE_H
 #define EDGE_H
-//#include "node.h"
-//This include is in case we want to pass the graph to any of the
-//edge apis. Can be removed if we don't need it.
+
+//IMPORTANT: Should Edge be a templatized class? As of now we don't let the user
+//create an object of edge type or represent edges other than in form of node ordinals?
 
 namespace lib {
-	//template <class T>
 	class Edge {
 		int ordinal;
 		int node1_ord;
 		int node2_ord;
 		std::vector<std::pair<std::string, std::string> > attributes;
-		//pair<list<Node<T> >::iterator, list<Node<T> >::iterator> my_nodes;
 	public:
 		Edge() = default;
 		Edge(const Edge &e) = default;
@@ -52,11 +50,6 @@ namespace lib {
 			std::pair<int, int> *e = new std::pair<int, int>(node1_ord, node2_ord);
 			return *e;
 		}
-
-		//Will need to figure out a way to define this kind of constructor.
-		//Edge(Graph &g, int node1_ordinal, int node2_ordinal);
-
-		//void set_node_pair(const list<Node<T> >::iterator n1, const list<Node<T> >::iterator n2);
 
 		//instead implement >>ostream operator
 		void print_node_ordinals();

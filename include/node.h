@@ -38,6 +38,19 @@ namespace lib {
 		//void update_edges(list<Edge<T> >::iterator it);
 		void update_edges(std::list<Edge>::iterator it);
 
+		// the complication of this logic suggests that we should maintain list of edge ordinals instead of the Edge iterators?
+		void remove_edge(int edge_ordinal) {
+			for(auto i = my_edges.begin(); i != my_edges.end(); i++) {
+				if((*(*i)).get_ordinal() == edge_ordinal) {
+					my_edges.erase(i);
+				}
+			}
+		}
+
+		std::vector<std::list<Edge>::iterator>& get_edges() {
+			return my_edges;
+		}
+
 		bool operator==(const Node &other) const;
 
 		// returns the index of the newly added attribute
@@ -76,7 +89,6 @@ namespace lib {
 	*/
 
 	template<class T>
-	//void Node::update_edges(list<Edge<T>>::iterator it) {
 	void Node<T>::update_edges(std::list<Edge>::iterator it) {
 		my_edges.push_back(it);
 	}
@@ -122,7 +134,6 @@ namespace lib {
 
 	template<class T>
 	void Node<T>::print() {
-		//vector<list<Edge<T>>::iterator>::iterator it;
 		std::vector<std::list<Edge>::iterator>::iterator it;
 		std::cout << val << " -> ";
 		for(it = my_edges.begin(); it != my_edges.end(); it++) {

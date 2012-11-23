@@ -14,11 +14,9 @@ namespace lib {
 		typedef typename std::list<Edge>::iterator EdgeIterType;
 
 		std::list<Node<T> > node_list;
-		//list<Edge<T>> edge_list;
 		std::list<Edge> edge_list;
 		
 		std::vector<NodeIterType> nodes;
-		//vector<list<Edge<T>>::iterator> edges;
 		std::vector<EdgeIterType> edges;
 
 		NodeIterType& get_node_iter(int ordinal) {
@@ -42,12 +40,9 @@ namespace lib {
 		~Graph() = default;
 
 		//iterator classes
-		
 		class node_iterator : public std::iterator<std::bidirectional_iterator_tag, int> {
 			
 			//iterator over node ordinals
-			//can we extend the list iterator itself. We will just override the derefrencing operator?
-
 			NodeIterType current;
 		public:
 			//how to define the default constructor?
@@ -67,12 +62,10 @@ namespace lib {
 		};
 
 		//should we provide const_node_iterator?
-		
+
 		class edge_iterator : public std::iterator<std::bidirectional_iterator_tag, int> {
 			
 			//iterator over edge ordinals.
-			//can we extend the list iterator itself. We will just override the derefrencing operator?
-
 			EdgeIterType current;
 		public:
 			//how to define the default constructor?
@@ -97,19 +90,19 @@ namespace lib {
 		bool operator==(const Graph&) const;
 		bool operator!=(const Graph&) const;
 
-		node_iterator& node_begin() {
+		node_iterator& nodes_begin() {
 			node_iterator it(this.node_list.begin());
 			return it;
 		}
-		node_iterator& node_end() {
+		node_iterator& nodes_end() {
 			node_iterator it(this.node_list.end());
 			return it;
 		}
-		edge_iterator& edge_begin() {
+		edge_iterator& edges_begin() {
 			edge_iterator it(this.edge_list.begin());
 			return it;
 		}
-		edge_iterator& edge_end() {
+		edge_iterator& edges_end() {
 			edge_iterator it(this.edge_list.end());
 			return it;
 		}
@@ -167,6 +160,7 @@ namespace lib {
 		int num_edges() { return edge_list.size(); }
 
 		void remove_node(int node_ordinal);
+		void delete_node_edges(int node_ordinal);
 
 		void remove_edge(int edge_ordinal);
 
