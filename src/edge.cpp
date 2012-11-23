@@ -1,3 +1,8 @@
+/**
+ * edge.cpp
+ * @author: GraphLib Team(?)
+ * Edge implementation. Possible because edge is not templatized.
+ */
 #include<iostream>
 #include "edge.h"
 

@@ -1,3 +1,8 @@
+/**
+ * graph.cpp
+ * @author: GraphLib Team(?)
+ * Implementation of the graph interface.
+ */
 #include<initializer_list>
 #include<iostream>
 #include "edge.h"

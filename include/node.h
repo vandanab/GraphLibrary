@@ -1,3 +1,8 @@
+/**
+ * node.h
+ * @author: GraphLib Team (?)
+ * Node class representing the nodes of the graph structure.
+ */
 #include<list>
 #include<string>
 #include<utility>

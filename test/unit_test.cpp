@@ -1,7 +1,7 @@
 /**
-* Unit Test for GraphLib
-* @author GraphLib Team (?)
-* @version 0.1 11/21/2012
+ * Unit Test for GraphLib
+ * @author GraphLib Team (?)
+ * @version 0.1 11/21/2012
 */
 
 #include<iostream>

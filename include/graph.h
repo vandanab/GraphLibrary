@@ -1,3 +1,9 @@
+/**
+ * graph.h
+ * @author: GraphLib Team (?)
+ * Graph class which provides the interface for the basic structures
+ * of a graph.
+ */
 #include<iterator>
 #include<list>
 #include<vector>
@@ -22,8 +28,6 @@ namespace lib {
 		NodeIterType& get_node_iter(int ordinal) {
 			return nodes[ordinal];
 		}
-		
-		friend class path_iterator;
 
 	public:
 		//define copy, move and default constructors
