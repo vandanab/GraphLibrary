@@ -106,7 +106,7 @@ namespace lib {
 	}
 }
 
-int main() {
+/*int main() {
 	lib::Graph<std::string> g;
 	std::string node1 = "red", node2 = "blue";
 	int n1 = g.add_node(node1);
@@ -114,4 +114,4 @@ int main() {
 	g.add_edge(n1, n2);
 	g.print();
 	return 0;
-}
+}*/
