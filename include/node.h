@@ -13,6 +13,7 @@
 namespace lib {
 	template<class T>
 	class Node {
+		int ordinal;
 		T val;
 		// for now the attributes are assumed to be string key-value pairs
 		std::vector<std::pair<std::string, std::string> > attributes;
@@ -20,14 +21,23 @@ namespace lib {
 		std::vector<std::list<Edge>::iterator> my_edges;
 
 	public:
-		Node();
-		Node(const Node<T> &n);
-		Node(const T &n);
-		~Node();
+		Node() = default;
+
+		//move constructor
+		Node(Node<T>&&) = default;
+		Node<T>& operator=(Node<T>&&) = default;
+		//copy constructor
+		Node(const Node<T> &n) = default;
+		Node<T>& operator=(Node<T> const&) = default;
+
+		//actual value constructor
+		Node(const T &n, int ord) : attributes(0), my_edges(0), val(n), ordinal(ord) {
+		}
+	
+		~Node() = default;
 		//void update_edges(list<Edge<T> >::iterator it);
 		void update_edges(std::list<Edge>::iterator it);
 
-		//define == operator based on the user object equal
 		bool operator==(const Node &other) const;
 
 		// returns the index of the newly added attribute
@@ -39,10 +49,17 @@ namespace lib {
 
 		std::string get_attribute_value(std::string key);
 
+		std::vector<std::pair<std::string, std::string>>& get_attributes();
+		
+		int get_ordinal() { return ordinal; }
+
 		void print();
 	};
 
+	/*
 	template<class T>
+	//this constructor should not be allowed
+	//basically a node without a value is useless
 	Node<T>::Node() : attributes(0), my_edges(0){
 	}
 
@@ -51,16 +68,12 @@ namespace lib {
 		val = n.val;
 		attributes = n.attributes;
 		my_edges = n.my_edges;
+		ordinal = n.ord;
 	}
 
 	template<class T>
-	Node<T>::Node(const T &n) : attributes(0), my_edges(0), val(n) {
-	}
-		//define regular constructors
-		//define move and copy constructors
-		//define destructor
-	template<class T>
 	Node<T>::~Node() {}
+	*/
 
 	template<class T>
 	//void Node::update_edges(list<Edge<T>>::iterator it) {
@@ -71,7 +84,8 @@ namespace lib {
 	//define == operator based on the user object equal
 	template<class T>
 	bool Node<T>::operator==(const Node &other) const {
-		return val == other.val;
+		//do we need to check for equal attributes too?
+		return val == other.val && ordinal == other.ordinal;
 	}
 
 	// returns the index of the newly added attribute
@@ -79,6 +93,11 @@ namespace lib {
 	int Node<T>::add_attribute(std::pair<std::string, std::string> attribute) {
 		attributes.push_back(attribute);
 		return attributes.size() - 1;
+	}
+
+	template<class T>
+	std::vector<std::pair<std::string, std::string>>& Node<T>::get_attributes() {
+		return attributes;
 	}
 
 	template<class T>
