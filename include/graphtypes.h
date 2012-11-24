@@ -76,7 +76,10 @@ namespace lib {
 		// should we return pair?
 		int get_node_index(const T& n) { return get_node_index(n); }
 
-		vector<int> neighbors(int node_ordinal);
+		//move constructor should prevent performance issues
+		vector<int> neighbors(int node_ordinal) { return g.neighbors(node_ordinal); }
+
+		vector<int> edges(int node_ordinal) { return g.edges(node_ordinal); }
 
 		int degree(int node_ordinal) { return g.num_edges(node_ordinal); }
 	};
@@ -147,8 +150,14 @@ namespace lib {
 		// should we return pair?
 		int get_node_index(const T& n) { return get_node_index(n); }
 
-		vector<int> successors(int node_ordinal);
-		vector<int> predecessors(int node_ordinal);
+		//move constructor should prevent performance issues
+		vector<int> neighbors(int node_ordinal) { return g.neighbors(node_ordinal); }
+		vector<int> successors(int node_ordinal) { return g.successors(node_ordinal); }
+		vector<int> predecessors(int node_ordinal) { return g.predecessors(node_ordinal); }
+
+		vector<int> edges(int node_ordinal) { return g.edges(node_ordinal); }
+		vector<int> in_edges(int node_ordinal) { return g.in_edges(node_ordinal); }
+		vector<int> out_edges(int node_ordinal) { return g.out_edges(node_ordinal); }
 
 		int in_degree(int node_ordinal) { return g.num_inEdges(node_ordinal); }
 		int out_degree(int node_ordinal) { return g.num_outEdges(node_ordinal); }

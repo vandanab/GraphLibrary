@@ -159,11 +159,15 @@ namespace lib {
 		
 		//retuns ordinal(index) of the newly added edge
 		int add_edge(int node1_ordinal, int node2_ordinal);
+		
+		//used by graph types
 		void add_node_inEdge(int node_ordinal, int edge_ordinal);
 		void add_node_outEdge(int node_ordinal, int edge_ordinal);
 
 		int num_nodes() { return node_list.size(); }
 		int num_edges() { return edge_list.size(); }
+		
+		//for graph types
 		int num_inEdges(int node_ordinal) { return (*nodes[node_ordinal]).get_inEdges().size(); }
 		int num_outEdges(int node_ordinal) { return (*nodes[node_ordinal]).get_outEdges().size(); }
 		int num_edges(int node_ordinal) { 
@@ -174,6 +178,8 @@ namespace lib {
 		void delete_node_edges(int node_ordinal);
 
 		void remove_edge(int edge_ordinal);
+
+		//used by graph types
 		void remove_nodes_inOutEdges(int edge_ordinal); //directed
 		void remove_nodes_outEdges(int edge_ordinal);
 
@@ -184,6 +190,15 @@ namespace lib {
 		const T &get_node(int index);
 
 		const std::pair<int, int>& get_edge(int index);
+
+		//for graph types
+		vector<int> neighbors(int node_ordinal) { return (*nodes[node_ordinal]).neighbors(); }
+		vector<int> successors(int node_ordinal) { return (*nodes[node_ordinal]).successors(); }
+		vector<int> predecessors(int node_ordinal) {  return (*nodes[node_ordinal]).predecessors(); }
+
+		vector<int> edges(int node_ordinal) { return (*nodes[node_ordinal]).edges(); }
+		vector<int> in_edges(int node_ordinal) { return (*nodes[node_ordinal]).in_edges(); }
+		vector<int> out_edges(int node_ordinal) { return (*nodes[node_ordinal]).out_edges(); }
 
 		const std::vector<std::pair<std::string, std::string>>& get_node_attributes(int index);
 		

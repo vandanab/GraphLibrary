@@ -23,8 +23,8 @@ namespace lib {
 		// for now the attributes are assumed to be string key-value pairs
 		std::vector<std::pair<std::string, std::string> > attributes;
 		//vector<list<Edge<T> >::iterator> my_edges;
-		std::vector<std::list<Edge>::iterator> in_edges;
-		std::vector<std::list<Edge>::iterator> out_edges;
+		std::vector<std::list<Edge>::iterator> inEdges;
+		std::vector<std::list<Edge>::iterator> outEdges;
 
 	public:
 		Node() = default;
@@ -37,7 +37,7 @@ namespace lib {
 		Node<T>& operator=(Node<T> const&) = default;
 
 		//actual value constructor
-		Node(const T &n, int ord) : attributes(0), in_edges(0), out_edges(0), val(n), ordinal(ord) {}
+		Node(const T &n, int ord) : attributes(0), inEdges(0), outEdges(0), val(n), ordinal(ord) {}
 	
 		~Node() = default;
 		//void update_edges(list<Edge<T> >::iterator it);
@@ -46,27 +46,27 @@ namespace lib {
 
 		// the complication of this logic suggests that we should maintain list of edge ordinals instead of the Edge iterators?
 		void remove_inEdge(int edge_ordinal) {
-			for(auto i = in_edges.begin(); i != in_edges.end(); i++) {
+			for(auto i = inEdges.begin(); i != inEdges.end(); i++) {
 				if((*(*i)).get_ordinal() == edge_ordinal) {
-					in_edges.erase(i);
+					inEdges.erase(i);
 				}
 			}
 		}
 
 		void remove_outEdge(int edge_ordinal) {
-			for(auto i = out_edges.begin(); i != out_edges.end(); i++) {
+			for(auto i = outEdges.begin(); i != outEdges.end(); i++) {
 				if((*(*i)).get_ordinal() == edge_ordinal) {
-					out_edges.erase(i);
+					outEdges.erase(i);
 				}
 			}
 		}
 
 		std::vector<std::list<Edge>::iterator>& get_inEdges() {
-			return in_edges;
+			return inEdges;
 		}
 
 		std::vector<std::list<Edge>::iterator>& get_outEdges() {
-			return out_edges;
+			return outEdges;
 		}
 
 		bool operator==(const Node &other) const;
@@ -81,6 +81,14 @@ namespace lib {
 		std::string get_attribute_value(std::string key);
 
 		std::vector<std::pair<std::string, std::string>>& get_attributes();
+
+		vector<int> neighbors();
+		vector<int> successors();
+		vector<int> predecessors();
+
+		vector<int> edges();
+		vector<int> in_edges();
+		vector<int> out_edges();
 		
 		int get_ordinal() { return ordinal; }
 
@@ -108,12 +116,12 @@ namespace lib {
 
 	template<class T>
 	void Node<T>::add_inEdge(std::list<Edge>::iterator it) {
-		in_edges.push_back(it);
+		inEdges.push_back(it);
 	}
 
 	template<class T>
 	void Node<T>::add_outEdge(std::list<Edge>::iterator it) {
-		out_edges.push_back(it);
+		outEdges.push_back(it);
 	}
 
 	//define == operator based on the user object equal
@@ -159,10 +167,82 @@ namespace lib {
 	void Node<T>::print() {
 		std::vector<std::list<Edge>::iterator>::iterator it;
 		std::cout << val << " -> ";
-		for(it = my_edges.begin(); it != my_edges.end(); it++) {
+		for(it = inEdges.begin(); it != inEdges.end(); it++) {
+			(*(*it)).print_node_ordinals();
+		}
+		for(it = outEdges.begin(); it != outEdges.end(); it++) {
 			(*(*it)).print_node_ordinals();
 		}
 		std::cout << std::endl;
+	}
+
+	template<class T>
+	vector<int> Node<T>::neighbors() {
+		long size = inEdges.size() + outEdges.size();
+		vector<int> v(size);
+		for (long i = 0; i < inEdges.size(); i++)
+		{
+			v.push_back((*inEdges[i]).get_source_node());
+		}
+		for (long i = outEdges.size(); i < size; i++)
+		{
+			//price to pay for not adding two edges in case of undirected graph
+			int src_ordinal = (*outEdges[i]).get_source_node();
+			int des_ordinal = (*outEdges[i]).get_destn_node();
+			v.push_back((ordinal == src_ordinal? des_ordinal : src_ordinal));
+		}
+		return v;
+	}
+
+	template<class T>
+	vector<int> Node<T>::successors() {
+		vector<int> v(outEdges.size());
+		for (long i = 0; i < outEdges.size(); i++)
+			v.push_back((*outEdges[i]).get_destn_node());
+		
+		return v;
+	}
+
+	template<class T>
+	vector<int> Node<T>::predecessors() {
+		vector<int> v(inEdges.size());
+		for (long i = 0; i < inEdges.size(); i++)
+			v.push_back((*inEdges[i]).get_source_node());
+	
+		return v;
+	}
+
+	template<class T>
+	vector<int> Node<T>::edges() {
+		long size = inEdges.size() + outEdges.size();
+		vector<int> v(size);
+		for (long i = 0; i < inEdges.size(); i++)
+		{
+			v.push_back((*inEdges[i]).get_ordinal());
+		}
+		for (long i = outEdges.size(); i < size; i++)
+		{
+			v.push_back((*outEdges[i]).get_ordinal());
+		}
+		return v;
+	}
+
+	template<class T>
+	vector<int> Node<T>::in_edges() {
+		vector<int> v(inEdges.size());
+		for (long i = 0; i < inEdges.size(); i++)
+			v.push_back((*inEdges[i]).get_ordinal());
+		
+		return v;
+	}
+
+	template<class T>
+	vector<int> Node<T>::out_edges() {
+		vector<int> v(outEdges.size());
+		for (long i = 0; i < outEdges.size(); i++)
+			v.push_back((*outEdges[i]).get_ordinal());
+	
+		return v;
 	}
 }
 #endif
