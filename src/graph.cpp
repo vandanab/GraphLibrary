@@ -8,6 +8,7 @@
 #include "edge.h"
 #include "node.h"
 #include "graph.h"
+#include "exceptions.h"
 
 namespace lib {
 	//understand difference between default and the following defined constructor
@@ -60,6 +61,27 @@ namespace lib {
 			_add_nodes(n, nodes..., ordinals);
 			return ordinals;
 		}
+	
+	template<class T>
+	void Graph<T>::delete_node(int node_ordinal) {
+		//make sure this whole operation is atomic
+		//remove the corresponding edges
+		delete_node_edges(node_ordinal);
+		node_list.erase(nodes[node_ordinal]);
+		//mark delete on the vector
+		nodes[node_ordinal] = node_list.end();
+	}
+
+	//deletion assumes unidirectional edges
+	template<class T>
+	void Graph<T>::delete_node_edges(int node_ordinal) {
+		NodeIterType node_itr = nodes[node_ordinal];
+		auto edges = (*node_itr).get_edges();
+		for(auto i = edges.begin(); i != edges.end(); i++) {
+			edges[(*(*i)).get_ordinal()] = edge_list.end();
+			edge_list.erase(*i);
+		}
+	}
 
 	//retuns ordinal(index) of the newly added edge
 	template<class T>
@@ -94,27 +116,6 @@ namespace lib {
 			return ordinals;
 		}
 
-	template<class T>
-	void Graph<T>::delete_node(int node_ordinal) {
-		//make sure this whole operation is atomic
-		//remove the corresponding edges
-		delete_node_edges(node_ordinal);
-		node_list.erase(nodes[node_ordinal]);
-		//mark delete on the vector
-		nodes[node_ordinal] = node_list.end();
-	}
-
-	//deletion assumes unidirectional edges
-	template<class T>
-	void Graph<T>::delete_node_edges(int node_ordinal) {
-		NodeIterType node_itr = nodes[node_ordinal];
-		auto edges = (*node_itr).get_edges();
-		for(auto i = edges.begin(); i != edges.end(); i++) {
-			edges[(*(*i)).get_ordinal()] = edge_list.end();
-			edge_list.erase(*i);
-		}
-	}
-
 	//assumes unidirectional edges
 	template<class T>
 	void Graph<T>::delete_edge(int edge_ordinal) {
@@ -125,12 +126,12 @@ namespace lib {
 		edges[edge_ordinal] = edge_list.end();
 	}
 
-	//using variadic templates
-	//void add_nodes()
-	//void add_edges()
-
 	template<class T>
 	const T& Graph<T>::get_node(int node_ordinal) {
+		auto it = nodes[node_ordinal];
+		if(it == node_list.end()) {
+			throw InvalidAccessException();
+		}
 		return const_cast<T&>((*nodes[node_ordinal]).get_val());
 	}
 
@@ -214,7 +215,7 @@ int main()
 	e1[5] = g1.add_edge(n1[3], n1[4]);
 	e1[6] = g1.add_edge(n1[3], n1[5]);
 
-	std::cout << "no. of nodes: " << g1.num_nodes() << "no. of edges: " << g1.num_edges() << std::endl;
+	std::cout << "no. of nodes: " << g1.num_nodes() << " no. of edges: " << g1.num_edges() << std::endl;
 	g1.print();
 
 	g1.delete_node(n1[4]);
@@ -224,7 +225,7 @@ int main()
 		std::cout << g1.get_node(n1[4]);
 	}
 	catch(...) {
-		std::cout << "expected exception on accessing deleted element";
+		std::cout << "expected exception on accessing deleted element" << std::endl;
 	}
 
 	std::cout << "no. of nodes: " << g1.num_nodes() << " no. of edges: " << g1.num_edges() << std::endl;

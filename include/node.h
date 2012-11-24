@@ -146,9 +146,9 @@ namespace lib {
 	template<class T>
 	void Node<T>::print() {
 		std::vector<std::list<Edge>::iterator>::iterator it;
-		std::cout << val << " -> ";
+		std::cout << ordinal << " -> ";
 		for(it = my_edges.begin(); it != my_edges.end(); it++) {
-			(*(*it)).print_node_ordinals();
+			(*(*it)).print_nodes();
 		}
 		std::cout << std::endl;
 	}
