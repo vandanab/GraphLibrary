@@ -14,7 +14,7 @@
 #define GRAPH_H
 
 namespace lib {
-	template <class T>
+	template<class T>
 	class Graph {
 		typedef typename std::list<Node<T> >::iterator NodeIterType;
 		typedef typename std::list<Edge>::iterator EdgeIterType;
@@ -29,19 +29,50 @@ namespace lib {
 			return nodes[ordinal];
 		}
 
+		template<typename... Nodes>
+		void _add_nodes(T n, Nodes... nodes, std::vector<int>& ords) {
+			ords.push_back(add_node(n));
+			_add_nodes(nodes..., ords);
+		}
+
+		void _add_nodes() {}
+
+		template<typename... Edges>
+		void _add_edges(std::pair<int, int> e, Edges... edges, std::vector<int>& ords) {
+			ords.push_back(add_edge(e.first, e.second));
+			_add_nodes(edges..., ords);
+		}
+
+		void _add_edges() {}
+
 	public:
 		//define copy, move and default constructors
-		Graph() = default;
+		Graph() {}
 
 		//move constructor
-		Graph(Graph<T>&&) = default;
-		Graph<T>& operator=(Graph<T>&&) = default;
+		Graph(Graph<T>&& g) = default;
+		Graph<T>& operator=(Graph<T>&& g) = default;
 		//copy constructor
-		Graph(Graph<T> const&) = default;
-		Graph<T>& operator=(Graph<T> const&) = default;
+		Graph(const Graph<T>& g) = default;
+		Graph<T>& operator=(const Graph<T>& g) = default;
+
+		//constructor taking vector of nodes or variadic template node objects
+		Graph(std::vector<T> v);
+
+		template<typename... Nodes>
+		Graph(Nodes... nodes);
 
 		//define destructor
 		~Graph() = default;
+
+		//graph operators
+		//complement of a graph
+		Graph<T>& operator!() {
+			Graph<T> g();
+			return g;
+		}
+		bool operator==(const Graph&) const {return true;}
+		bool operator!=(const Graph&) const {return true;}
 
 		//iterator classes
 		class node_iterator : public std::iterator<std::bidirectional_iterator_tag, int> {
@@ -89,10 +120,6 @@ namespace lib {
 		};
 
 		//should we provide const_edge_iterator?
-
-		//operators
-		bool operator==(const Graph&) const;
-		bool operator!=(const Graph&) const;
 
 		node_iterator& nodes_begin() {
 			node_iterator it(this.node_list.begin());
@@ -154,8 +181,11 @@ namespace lib {
 			int operator*() {return (*(*current)).get_ordinal();}
 		};
 
+		
+		//structural
+		
 		//returns ordinal(index) of the newly added node
-		int add_node(T &n);
+		int add_node(T n);
 		
 		//retuns ordinal(index) of the newly added edge
 		int add_edge(int node1_ordinal, int node2_ordinal);
@@ -163,22 +193,39 @@ namespace lib {
 		int num_nodes() { return node_list.size(); }
 		int num_edges() { return edge_list.size(); }
 
-		void remove_node(int node_ordinal);
-		void delete_node_edges(int node_ordinal);
+		void delete_node(int node_ordinal);
 
-		void remove_edge(int edge_ordinal);
+		void delete_edge(int edge_ordinal);
+
+		//using vector
+		std::vector<int>& add_nodes(std::vector<T> nodes);
+		
+		std::vector<int>& add_edges(std::vector<std::pair<int, int>> edges);
 
 		//using variadic templates
-		//void add_nodes()
-		//void add_edges()
+		template<typename... Nodes>
+		std::vector<int>& add_nodes(T n, Nodes... nodes);
 
-		const T &get_node(int index);
+		template<typename... Edges>
+		std::vector<int>& add_edges(std::pair<int, int> e, Edges... edges);
 
-		const std::pair<int, int>& get_edge(int index);
+		const T& get_node(int node_ordinal);
+
+		std::vector<const T&> get_nodes();
+
+		const std::pair<int, int>& get_edge(int edge_ordinal);
 
 		const std::vector<std::pair<std::string, std::string>>& get_node_attributes(int index);
 		
 		const std::vector<std::pair<std::string, std::string>>& get_edge_attributes(int index);
+
+		void update_node(int node_ordinal, T n) {
+			(*nodes[node_ordinal]).update_node(n);
+		}
+
+		int get_degree(int node_ordinal) {
+			return (*nodes[node_ordinal]).get_num_edges();
+		}
 
 		// how to report error if not found?
 		// should we return pair?
@@ -187,6 +234,10 @@ namespace lib {
 		//currently for debugging purposes
 		//implement >>ostream operator instead
 		void print();
+
+	protected:
+		void delete_node_edges(int node_ordinal);
+
 	};
 }
 #endif

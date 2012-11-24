@@ -43,8 +43,10 @@ namespace lib {
 		//void update_edges(list<Edge<T> >::iterator it);
 		void update_edges(std::list<Edge>::iterator it);
 
+		void update_node(T n) { val = n.val; }
+
 		// the complication of this logic suggests that we should maintain list of edge ordinals instead of the Edge iterators?
-		void remove_edge(int edge_ordinal) {
+		void delete_edge(int edge_ordinal) {
 			for(auto i = my_edges.begin(); i != my_edges.end(); i++) {
 				if((*(*i)).get_ordinal() == edge_ordinal) {
 					my_edges.erase(i);
@@ -52,9 +54,13 @@ namespace lib {
 			}
 		}
 
+		T& get_val() { return val; }
+
 		std::vector<std::list<Edge>::iterator>& get_edges() {
 			return my_edges;
 		}
+
+		int get_num_edges() { return my_edges.size(); }
 
 		bool operator==(const Node &other) const;
 
