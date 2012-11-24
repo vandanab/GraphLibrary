@@ -164,6 +164,11 @@ namespace lib {
 
 		int num_nodes() { return node_list.size(); }
 		int num_edges() { return edge_list.size(); }
+		int num_inEdges(int node_ordinal) { return (*nodes[node_ordinal]).get_inEdges().size(); }
+		int num_outEdges(int node_ordinal) { return (*nodes[node_ordinal]).get_outEdges().size(); }
+		int num_edges(int node_ordinal) { 
+			return (num_inEdges(node_ordinal) + num_outEdges(node_ordinal));
+		}
 
 		void remove_node(int node_ordinal);
 		void delete_node_edges(int node_ordinal);
