@@ -93,9 +93,8 @@ namespace lib {
 		
 		auto it = --edge_list.end();
 		edges.push_back(it);
-		(*nodes[node1_ordinal]).update_edges(it);
 		//assuming unidirectional edges
-		//(*nodes[node2_ordinal]).update_edges(it);
+		update_node_edges(node1_ordinal, it);
 		return ord;
 	}
 

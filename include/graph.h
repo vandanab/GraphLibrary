@@ -201,6 +201,18 @@ namespace lib {
 		std::vector<int>& add_nodes(std::vector<T> nodes);
 		
 		std::vector<int>& add_edges(std::vector<std::pair<int, int>> edges);
+		
+		void delete_nodes(std::vector<int> ns) {
+			for(auto i = ns.begin(); i < ns.end(); i++) {
+				delete_node(*i);
+			}
+		}
+
+		void delete_edges(std::vector<int> edges) {
+			for(auto i = edges.begin(); i < edges.end(); i++) {
+				delete_edge(*i);
+			}
+		}
 
 		//using variadic templates
 		template<typename... Nodes>
@@ -208,6 +220,10 @@ namespace lib {
 
 		template<typename... Edges>
 		std::vector<int>& add_edges(std::pair<int, int> e, Edges... edges);
+
+		void update_node_edges(int node_ordinal, EdgeIterType it) {
+			(*nodes[node_ordinal]).update_edges(it);
+		}
 
 		const T& get_node(int node_ordinal);
 
