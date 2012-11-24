@@ -159,6 +159,8 @@ namespace lib {
 		
 		//retuns ordinal(index) of the newly added edge
 		int add_edge(int node1_ordinal, int node2_ordinal);
+		void add_node_inEdge(int node_ordinal, int edge_ordinal);
+		void add_node_outEdge(int node_ordinal, int edge_ordinal);
 
 		int num_nodes() { return node_list.size(); }
 		int num_edges() { return edge_list.size(); }
@@ -167,6 +169,8 @@ namespace lib {
 		void delete_node_edges(int node_ordinal);
 
 		void remove_edge(int edge_ordinal);
+		void remove_nodes_inOutEdges(int edge_ordinal); //directed
+		void remove_nodes_outEdges(int edge_ordinal);
 
 		//using variadic templates
 		//void add_nodes()

@@ -23,7 +23,8 @@ namespace lib {
 		// for now the attributes are assumed to be string key-value pairs
 		std::vector<std::pair<std::string, std::string> > attributes;
 		//vector<list<Edge<T> >::iterator> my_edges;
-		std::vector<std::list<Edge>::iterator> my_edges;
+		std::vector<std::list<Edge>::iterator> in_edges;
+		std::vector<std::list<Edge>::iterator> out_edges;
 
 	public:
 		Node() = default;
@@ -36,24 +37,36 @@ namespace lib {
 		Node<T>& operator=(Node<T> const&) = default;
 
 		//actual value constructor
-		Node(const T &n, int ord) : attributes(0), my_edges(0), val(n), ordinal(ord) {
-		}
+		Node(const T &n, int ord) : attributes(0), in_edges(0), out_edges(0), val(n), ordinal(ord) {}
 	
 		~Node() = default;
 		//void update_edges(list<Edge<T> >::iterator it);
-		void update_edges(std::list<Edge>::iterator it);
+		void add_inEdge(std::list<Edge>::iterator it);
+		void add_outEdge(std::list<Edge>::iterator it);
 
 		// the complication of this logic suggests that we should maintain list of edge ordinals instead of the Edge iterators?
-		void remove_edge(int edge_ordinal) {
-			for(auto i = my_edges.begin(); i != my_edges.end(); i++) {
+		void remove_inEdge(int edge_ordinal) {
+			for(auto i = in_edges.begin(); i != in_edges.end(); i++) {
 				if((*(*i)).get_ordinal() == edge_ordinal) {
-					my_edges.erase(i);
+					in_edges.erase(i);
 				}
 			}
 		}
 
-		std::vector<std::list<Edge>::iterator>& get_edges() {
-			return my_edges;
+		void remove_outEdge(int edge_ordinal) {
+			for(auto i = out_edges.begin(); i != out_edges.end(); i++) {
+				if((*(*i)).get_ordinal() == edge_ordinal) {
+					out_edges.erase(i);
+				}
+			}
+		}
+
+		std::vector<std::list<Edge>::iterator>& get_inEdges() {
+			return in_edges;
+		}
+
+		std::vector<std::list<Edge>::iterator>& get_outEdges() {
+			return out_edges;
 		}
 
 		bool operator==(const Node &other) const;
@@ -94,8 +107,13 @@ namespace lib {
 	*/
 
 	template<class T>
-	void Node<T>::update_edges(std::list<Edge>::iterator it) {
-		my_edges.push_back(it);
+	void Node<T>::add_inEdge(std::list<Edge>::iterator it) {
+		in_edges.push_back(it);
+	}
+
+	template<class T>
+	void Node<T>::add_outEdge(std::list<Edge>::iterator it) {
+		out_edges.push_back(it);
 	}
 
 	//define == operator based on the user object equal

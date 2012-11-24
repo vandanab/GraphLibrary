@@ -39,14 +39,22 @@ namespace lib {
 		//Edge<T> edge( node1_ordinal, node2_ordinal);
 		int ord = edges.size();
 		Edge edge(node1_ordinal, node2_ordinal, ord);
-		edge_list.push_back(edge);
-		
+		edge_list.push_back(edge);	
 		auto it = --edge_list.end();
 		edges.push_back(it);
-		(*nodes[node1_ordinal]).update_edges(it);
-		//assuming unidirectional edges
-		//(*nodes[node2_ordinal]).update_edges(it);
 		return ord;
+	}
+
+	//add in-edge iterator in the node
+	template<class T>
+	int Graph<T>::add_node_inEdge(int node_ordinal, int edge_ordinal) {
+		(*nodes[node_ordinal]).add_inEdge(edges[edge_ordinal]);
+	}
+
+	//add out-edge iterator in the node
+	template<class T>
+	int Graph<T>::add_node_outEdge(int node_ordinal, int edge_ordinal) {
+		(*nodes[node_ordinal]).add_outEdge(edges[edge_ordinal]);
 	}
 
 	template<class T>
@@ -63,7 +71,12 @@ namespace lib {
 	template<class T>
 	void Graph<T>::delete_node_edges(int node_ordinal) {
 		NodeIterType node_itr = nodes[node_ordinal];
-		auto edges = (*node_itr).get_edges();
+		auto edges = (*node_itr).get_inEdges();
+		for(auto i = edges.begin(); i != edges.end(); i++) {
+			edges[(*i).get_ordinal()] = nullptr;
+			edge_list.erase(*i);
+		}
+		auto edges = (*node_itr).get_outEdges();
 		for(auto i = edges.begin(); i != edges.end(); i++) {
 			edges[(*i).get_ordinal()] = nullptr;
 			edge_list.erase(*i);
@@ -74,10 +87,26 @@ namespace lib {
 	template<class T>
 	void Graph<T>::remove_edge(int edge_ordinal) {
 		//remove itself from the vector in node object
-		int node_ordinal = (*edges[edge_ordinal]).get_source_node();
-		(*nodes[node_ordinal]).delete_edge(edge_ordinal);
 		edge_list.erase(edges[edge_ordinal]);
 		edges[edge_ordinal] = nullptr;
+	}
+
+	//remove in and out edges from the source and destination nodes resp.
+	template<class T>
+	int Graph<T>::remove_nodes_inOutEdges(int edge_ordinal) {
+		int node_ordinal1 = (*edges[edge_ordinal]).get_source_node();
+		int node_ordinal2 = (*edges[edge_ordinal]).get_destn_node();
+		(*nodes[node_ordinal1]).remove_outEdge(edge_ordinal);
+		(*nodes[node_ordinal2]).remove_inEdge(edge_ordinal);
+	}
+
+	//remove out edges from the source and destination nodes
+	template<class T>
+	int Graph<T>::remove_nodes_outEdges(int edge_ordinal) {
+		int node_ordinal1 = (*edges[edge_ordinal]).get_source_node();
+		int node_ordinal2 = (*edges[edge_ordinal]).get_destn_node();
+		(*nodes[node_ordinal1]).remove_outEdge(edge_ordinal);
+		(*nodes[node_ordinal2]).remove_outEdge(edge_ordinal);
 	}
 
 	//using variadic templates
