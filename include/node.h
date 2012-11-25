@@ -58,6 +58,9 @@ namespace lib {
 			}
 		}
 
+		void delete_in_edges() { in_edges.clear(); }
+		void delete_out_edges() { out_edges.clear(); }
+
 		void delete_out_edge(int edge_ordinal) {
 			for(auto i = out_edges.begin(); i != out_edges.end(); i++) {
 				if(*i == edge_ordinal) {
@@ -66,9 +69,9 @@ namespace lib {
 			}
 		}
 
-		std::vector<int>& get_in_edges() { return in_edges; }
+		std::vector<int> get_in_edges() { return in_edges; }
 
-		std::vector<int>& get_out_edges() { return out_edges; }
+		std::vector<int> get_out_edges() { return out_edges; }
 
 		T& get_val() { return val; }
 

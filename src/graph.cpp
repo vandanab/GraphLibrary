@@ -75,21 +75,21 @@ namespace lib {
 	//deletion assumes unidirectional edges
 	template<class T>
 	void Graph<T>::delete_node_edges(int node_ordinal) {
-		NodeIterType node_itr = nodes[node_ordinal];
-		if(node_itr == node_list.end())
+		if(nodes[node_ordinal] == node_list.end())
 			throw InvalidAccessException("Node does not exist");
-		auto in_edges = (*node_itr).get_in_edges();
-		auto out_edges = (*node_itr).get_out_edges();
-		for(int i = 0; i < in_edges.size(); i++)
-			std::cout<<in_edges[i];
-		for(auto i = in_edges.begin(); i != in_edges.end(); i++) {
-			edge_list.erase(edges[*i]);
-		  edges[*i] = edge_list.end();
+		std::vector<int> in_edges = (*nodes[node_ordinal]).get_in_edges();
+		std::vector<int> out_edges = (*nodes[node_ordinal]).get_out_edges();
+			for(int i = 0; i < in_edges.size(); i++) {
+				std::cout<<in_edges[i];
+				delete_edge(in_edges[i]);
+			}
+	/*	
+		for(auto i = 0; i != in_edges.size(); i++) {
+			delete_edge(in_edges[i]);
 		}
 		for(auto i = out_edges.begin(); i != out_edges.end(); i++) {
-			edge_list.erase(edges[*i]);
-		  edges[*i] = edge_list.end();
-		}
+			delete_edge(*i);
+		}*/
 	}
 
 	template<class T>
@@ -167,16 +167,21 @@ namespace lib {
 	//assumes unidirectional edges
 	template<class T>
 	void Graph<T>::delete_edge(int edge_ordinal) {
+		std::cout<<"in delete edge\n";
+		/*
 		if(edges[edge_ordinal] == edge_list.end())
 			throw InvalidAccessException("Edge does not exist");
 		//remove itself from the vector in node object
 		int src_ordinal = (*edges[edge_ordinal]).get_source_node();
-		(*nodes[src_ordinal]).delete_out_edge(edge_ordinal);
+		if(nodes[src_ordinal] != node_list.end())
+			(*nodes[src_ordinal]).delete_out_edge(edge_ordinal);
 		int dest_ordinal = (*edges[edge_ordinal]).get_destn_node();
-		(*nodes[dest_ordinal]).delete_in_edge(edge_ordinal);
+		if(nodes[dest_ordinal] != node_list.end())
+			(*nodes[dest_ordinal]).delete_in_edge(edge_ordinal);
 
 		edge_list.erase(edges[edge_ordinal]);
 		edges[edge_ordinal] = edge_list.end();
+		*/
 	}
 
 	template<class T>
@@ -281,7 +286,7 @@ int main()
 	g1.print();
 
 	g1.delete_node(n1[4]);
-	g1.delete_edge(e1[2]);
+	//g1.delete_edge(e1[2]);
 
 	try {
 		std::cout << g1.get_node(n1[4]);
