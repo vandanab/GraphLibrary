@@ -40,24 +40,15 @@ namespace lib {
 		int add_node(T &n) { return g.add_node(n); }
 		
 		//retuns ordinal(index) of the newly added edge
-		int add_edge(int node1_ordinal, int node2_ordinal) { 
-			int edge_ordinal = g.add_edge(node1_ordinal, node2_ordinal);
-			g.add_node_outEdge(node1_ordinal, edge_ordinal);
-			g.add_node_outEdge(node2_ordinal, edge_ordinal);
-		}
+		int add_edge(int node1_ordinal, int node2_ordinal) { g.add_edge(node1_ordinal, node2_ordinal); }
 
 		int num_nodes() { return g.num_nodes(); }
 		int num_edges() { return g.num_edges(); }
 
 		void remove_node(int node_ordinal) { g.remove_node(node_ordinal); }
-		void delete_node_edges(int node_ordinal) { 
-			g.delete_node_edges(node_ordinal);
-		}
+		void delete_node_edges(int node_ordinal) { g.delete_node_edges(node_ordinal); }
 
-		void remove_edge(int edge_ordinal) {
-			g.remove_nodes_outEdges(edge_ordinal);
-			g.remove_edge(edge_ordinal); 
-		}
+		void remove_edge(int edge_ordinal) { g.remove_edge(edge_ordinal); }
 
 		//using variadic templates
 		//void add_nodes()
@@ -80,9 +71,9 @@ namespace lib {
 		int get_node_index(const T& n) { return get_node_index(n); }
 
 		//move constructor should prevent performance issues
-		std::vector<int> neighbors(int node_ordinal) { return g.neighbors(node_ordinal); }
+		std::vector<int> neighbors(int node_ordinal) { return g.neighbors_undirected(node_ordinal); }
 
-		std::vector<int> edges(int node_ordinal) { return g.get_edges(node_ordinal); }
+		std::vector<int> edges(int node_ordinal) { return g.get_edges_undirected(node_ordinal); }
 
 		int degree(int node_ordinal) { return g.num_edges(node_ordinal); }
 	};
@@ -116,11 +107,7 @@ namespace lib {
 		int add_node(T &n) { return g.add_node(n); }
 		
 		//retuns ordinal(index) of the newly added edge
-		int add_edge(int node1_ordinal, int node2_ordinal) { 
-			int edge_ordinal = g.add_edge(node1_ordinal, node2_ordinal);
-			g.add_node_outEdge(node1_ordinal, edge_ordinal);
-			g.add_node_inEdge(node2_ordinal, edge_ordinal);
-		}
+		int add_edge(int node1_ordinal, int node2_ordinal) { g.add_edge(node1_ordinal, node2_ordinal); }
 
 		int num_nodes() { return g.num_nodes(); }
 		int num_edges() { return g.num_edges(); }
@@ -130,10 +117,7 @@ namespace lib {
 			g.delete_node_edges(node_ordinal);
 		}
 
-		void remove_edge(int edge_ordinal) { 
-			g.remove_nodes_inOutEdges(edge_ordinal);
-			g.remove_edge(edge_ordinal); 
-		}
+		void remove_edge(int edge_ordinal) { g.remove_edge(edge_ordinal); }
 
 		//using variadic templates
 		//void add_nodes()
@@ -156,11 +140,11 @@ namespace lib {
 		int get_node_index(const T& n) { return get_node_index(n); }
 
 		//move constructor should prevent performance issues
-		std::vector<int> neighbors(int node_ordinal) { return g.neighbors(node_ordinal); }
+		std::vector<int> neighbors(int node_ordinal) { return g.neighbors_directed(node_ordinal); }
 		std::vector<int> successors(int node_ordinal) { return g.successors(node_ordinal); }
 		std::vector<int> predecessors(int node_ordinal) { return g.predecessors(node_ordinal); }
 
-		std::vector<int> edges(int node_ordinal) { return g.get_edges(node_ordinal); }
+		std::vector<int> get_edges(int node_ordinal) { return g.get_edges_directed(node_ordinal); }
 		std::vector<int> in_edges(int node_ordinal) { return g.in_edges(node_ordinal); }
 		std::vector<int> out_edges(int node_ordinal) { return g.out_edges(node_ordinal); }
 

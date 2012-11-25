@@ -86,11 +86,13 @@ namespace lib {
 
 		std::vector<std::pair<std::string, std::string>>& get_attributes();
 
-		std::vector<int> neighbors();
+		std::vector<int> neighbors_undirected();
+		std::vector<int> neighbors_directed();
 		std::vector<int> successors();
 		std::vector<int> predecessors();
 
-		std::vector<int> edges();
+		std::vector<int> get_edges_undirected();
+		std::vector<int> get_edges_directed();
 		std::vector<int> in_edges();
 		std::vector<int> out_edges();
 		
@@ -181,7 +183,7 @@ namespace lib {
 	}
 
 	template<class T>
-	std::vector<int> Node<T>::neighbors() {
+	std::vector<int> Node<T>::neighbors_undirected() {
 		long size = inEdges.size() + outEdges.size();
 		std::vector<int> v(size);
 		for (long i = 0; i < inEdges.size(); i++)
@@ -190,12 +192,14 @@ namespace lib {
 		}
 		for (long i = outEdges.size(); i < size; i++)
 		{
-			//price to pay for not adding two edges in case of undirected graph
-			int src_ordinal = (*outEdges[i]).get_source_node();
-			int des_ordinal = (*outEdges[i]).get_destn_node();
-			v.push_back((ordinal == src_ordinal? des_ordinal : src_ordinal));
+			v.push_back((*outEdges[i]).get_source_node());
 		}
 		return v;
+	}
+
+	template<class T>
+	std::vector<int> Node<T>::neighbors_directed() {
+		return successors();
 	}
 
 	template<class T>
@@ -217,7 +221,7 @@ namespace lib {
 	}
 
 	template<class T>
-	std::vector<int> Node<T>::edges() {
+	std::vector<int> Node<T>::get_edges_undirected() {
 		long size = inEdges.size() + outEdges.size();
 		std::vector<int> v(size);
 		for (long i = 0; i < inEdges.size(); i++)
@@ -229,6 +233,11 @@ namespace lib {
 			v.push_back((*outEdges[i]).get_ordinal());
 		}
 		return v;
+	}
+
+	template<class T>
+	std::vector<int> Node<T>::get_edges_directed() {
+		return out_edges();
 	}
 
 	template<class T>
