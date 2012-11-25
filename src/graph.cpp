@@ -84,11 +84,11 @@ namespace lib {
 			std::cout<<in_edges[i];
 		for(auto i = in_edges.begin(); i != in_edges.end(); i++) {
 			edge_list.erase(edges[*i]);
-		  edges[*i] = edge_list.end();
+			edges[*i] = edge_list.end();
 		}
 		for(auto i = out_edges.begin(); i != out_edges.end(); i++) {
 			edge_list.erase(edges[*i]);
-		  edges[*i] = edge_list.end();
+			edges[*i] = edge_list.end();
 		}
 	}
 
@@ -105,9 +105,9 @@ namespace lib {
 		{
 			v.push_back((*(edges[in_edges[i]])).get_source_node());
 		}
-		for (int i = in_edges.size(); i < size; i++)
+		for (int i = 0; i < out_edges.size(); i++)
 		{
-			v.push_back((*(edges[out_edges[i-in_edges.size()]])).get_destn_node());
+			v.push_back((*(edges[out_edges[i]])).get_destn_node());
 		}
 		return v;
 	}

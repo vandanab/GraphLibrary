@@ -67,7 +67,7 @@ namespace lib {
 		//move constructor should prevent performance issues
 		std::vector<int> neighbors(int node_ordinal) { return g.neighbors(node_ordinal); }
 
-		std::vector<int> edges(int node_ordinal) { return g.get_undirected_edges(node_ordinal); }
+		std::vector<int> edges(int node_ordinal) { return g.get_edges_undirected(node_ordinal); }
 
 		int degree(int node_ordinal) { return g.num_edges(node_ordinal); }
 	};

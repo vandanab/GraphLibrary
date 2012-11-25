@@ -254,13 +254,13 @@ namespace lib {
 		std::vector<int> successors(int node_ordinal) { return (*nodes[node_ordinal]).successors(); }
 		std::vector<int> predecessors(int node_ordinal) {  return (*nodes[node_ordinal]).predecessors(); }*/
 
-		std::vector<int>& get_edges_undirected(int node_ordinal) { 
+		std::vector<int> get_edges_undirected(int node_ordinal) { 
 			std::vector<int> edges_ = (*nodes[node_ordinal]).get_in_edges();
 			std::vector<int> edgeso_ = (*nodes[node_ordinal]).get_out_edges();
 			edges_.insert(edges_.end(), edgeso_.begin(), edgeso_.end());
 			return edges_;
 		}
-		std::vector<int>& get_edges_directed(int node_ordinal) { 
+		std::vector<int> get_edges_directed(int node_ordinal) { 
 			return (*nodes[node_ordinal]).get_out_edges();
 		}
 		std::vector<int> in_edges(int node_ordinal) { return (*nodes[node_ordinal]).in_edges(); }
