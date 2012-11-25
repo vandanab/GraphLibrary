@@ -51,7 +51,7 @@ namespace lib {
 		return attrib.second;
 	}
 	
-	void Edge::print_node_ordinals() {
+	void Edge::print_nodes() {
 		std::cout << "(" << node1_ord << ", " << node2_ord << ")";
 	}
 }

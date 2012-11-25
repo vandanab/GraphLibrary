@@ -51,7 +51,7 @@ namespace lib {
 		}
 
 		//instead implement >>ostream operator
-		void print_node_ordinals();
+		void print_nodes();
 	};
 }
 #endif

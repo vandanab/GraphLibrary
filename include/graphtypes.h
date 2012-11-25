@@ -8,11 +8,12 @@
 #define _GRAPHTYPES_H
 
 #include"graph.h"
+#include<vector>
 
 namespace lib {
 	template <class T>
 	class UndirectedGraph {
-		Graph g;
+		Graph<T> g;
 
 	public:
 		//define copy, move and default constructors
@@ -28,6 +29,8 @@ namespace lib {
 		//define destructor
 		~UndirectedGraph() = default;
 
+		typedef typename Graph<T>::node_iterator node_iterator;
+		typedef typename Graph<T>::edge_iterator edge_iterator;
 		node_iterator& nodes_begin() { return g.nodes_begin(); }
 		node_iterator& nodes_end() { return g.nodes_end(); }
 		edge_iterator& edges_begin() { return g.edges_begin(); }
@@ -77,16 +80,16 @@ namespace lib {
 		int get_node_index(const T& n) { return get_node_index(n); }
 
 		//move constructor should prevent performance issues
-		vector<int> neighbors(int node_ordinal) { return g.neighbors(node_ordinal); }
+		std::vector<int> neighbors(int node_ordinal) { return g.neighbors(node_ordinal); }
 
-		vector<int> edges(int node_ordinal) { return g.edges(node_ordinal); }
+		std::vector<int> edges(int node_ordinal) { return g.get_edges(node_ordinal); }
 
 		int degree(int node_ordinal) { return g.num_edges(node_ordinal); }
 	};
 
 	template <class T>
 	class DirectedGraph {
-		Graph g;
+		Graph<T> g;
 
 	public:
 		//define copy, move and default constructors
@@ -102,6 +105,8 @@ namespace lib {
 		//define destructor
 		~DirectedGraph() = default;
 
+		typedef typename Graph<T>::node_iterator node_iterator;
+		typedef typename Graph<T>::edge_iterator edge_iterator;
 		node_iterator& nodes_begin() { return g.nodes_begin(); }
 		node_iterator& nodes_end() { return g.nodes_end(); }
 		edge_iterator& edges_begin() { return g.edges_begin(); }
@@ -113,8 +118,8 @@ namespace lib {
 		//retuns ordinal(index) of the newly added edge
 		int add_edge(int node1_ordinal, int node2_ordinal) { 
 			int edge_ordinal = g.add_edge(node1_ordinal, node2_ordinal);
-			add_node_outEdge(node1_ordinal, edge_ordinal);
-			add_node_inEdge(node2_ordinal, edge_ordinal);
+			g.add_node_outEdge(node1_ordinal, edge_ordinal);
+			g.add_node_inEdge(node2_ordinal, edge_ordinal);
 		}
 
 		int num_nodes() { return g.num_nodes(); }
@@ -151,13 +156,13 @@ namespace lib {
 		int get_node_index(const T& n) { return get_node_index(n); }
 
 		//move constructor should prevent performance issues
-		vector<int> neighbors(int node_ordinal) { return g.neighbors(node_ordinal); }
-		vector<int> successors(int node_ordinal) { return g.successors(node_ordinal); }
-		vector<int> predecessors(int node_ordinal) { return g.predecessors(node_ordinal); }
+		std::vector<int> neighbors(int node_ordinal) { return g.neighbors(node_ordinal); }
+		std::vector<int> successors(int node_ordinal) { return g.successors(node_ordinal); }
+		std::vector<int> predecessors(int node_ordinal) { return g.predecessors(node_ordinal); }
 
-		vector<int> edges(int node_ordinal) { return g.edges(node_ordinal); }
-		vector<int> in_edges(int node_ordinal) { return g.in_edges(node_ordinal); }
-		vector<int> out_edges(int node_ordinal) { return g.out_edges(node_ordinal); }
+		std::vector<int> edges(int node_ordinal) { return g.get_edges(node_ordinal); }
+		std::vector<int> in_edges(int node_ordinal) { return g.in_edges(node_ordinal); }
+		std::vector<int> out_edges(int node_ordinal) { return g.out_edges(node_ordinal); }
 
 		int in_degree(int node_ordinal) { return g.num_inEdges(node_ordinal); }
 		int out_degree(int node_ordinal) { return g.num_outEdges(node_ordinal); }

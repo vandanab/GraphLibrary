@@ -3,7 +3,7 @@
  * @author GraphLib Team (?)
  * @version 0.1 11/21/2012
 */
-
+/*
 #include<iostream>
 #include"graph.h"
 
@@ -51,4 +51,4 @@ int main()
 	g1.print();
 
 	return 0;
-}
+}*/
