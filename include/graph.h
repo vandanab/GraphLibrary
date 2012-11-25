@@ -194,13 +194,14 @@ namespace lib {
 		int num_edges() { return edge_list.size(); }
 		
 		//for graph types
-		int num_inEdges(int node_ordinal) { return (*nodes[node_ordinal]).get_inEdges().size(); }
-		int num_outEdges(int node_ordinal) { return (*nodes[node_ordinal]).get_outEdges().size(); }
+		int num_in_edges(int node_ordinal) { return (*nodes[node_ordinal]).get_in_edges().size(); }
+		int num_out_edges(int node_ordinal) { return (*nodes[node_ordinal]).get_out_edges().size(); }
 		int num_edges(int node_ordinal) { 
-			return (num_inEdges(node_ordinal) + num_outEdges(node_ordinal));
+			return (num_in_edges(node_ordinal) + num_out_edges(node_ordinal));
 		}
 
 		void delete_node(int node_ordinal);
+		void delete_node_edges(int node_ordinal);
 
 		void delete_edge(int edge_ordinal);
 
@@ -235,10 +236,15 @@ namespace lib {
 		const T& get_node(int node_ordinal);
 
 		std::vector<const T&> get_nodes();
+		
+		std::vector<int> neighbors(int node_ordinal);
+		std::vector<int> successors(int node_ordinal);
+		std::vector<int> predecessors(int node_ordinal);
 
 		const std::pair<int, int>& get_edge(int edge_ordinal);
 
 		//for graph types
+		/*
 		std::vector<int> neighbors_undirected(int node_ordinal) {
 			return (*nodes[node_ordinal]).neighbors_undirected(); 
 		}
@@ -246,13 +252,16 @@ namespace lib {
 			return (*nodes[node_ordinal]).neighbors_directed(); 
 		}
 		std::vector<int> successors(int node_ordinal) { return (*nodes[node_ordinal]).successors(); }
-		std::vector<int> predecessors(int node_ordinal) {  return (*nodes[node_ordinal]).predecessors(); }
+		std::vector<int> predecessors(int node_ordinal) {  return (*nodes[node_ordinal]).predecessors(); }*/
 
-		std::vector<int> get_edges_undirected(int node_ordinal) { 
-			return (*nodes[node_ordinal]).get_edges_undirected(); 
+		std::vector<int>& get_edges_undirected(int node_ordinal) { 
+			std::vector<int> edges_ = (*nodes[node_ordinal]).get_in_edges();
+			std::vector<int> edgeso_ = (*nodes[node_ordinal]).get_out_edges();
+			edges_.insert(edges_.end(), edgeso_.begin(), edgeso_.end());
+			return edges_;
 		}
-		std::vector<int> get_edges_directed(int node_ordinal) { 
-			return (*nodes[node_ordinal]).get_edges_directed();
+		std::vector<int>& get_edges_directed(int node_ordinal) { 
+			return (*nodes[node_ordinal]).get_out_edges();
 		}
 		std::vector<int> in_edges(int node_ordinal) { return (*nodes[node_ordinal]).in_edges(); }
 		std::vector<int> out_edges(int node_ordinal) { return (*nodes[node_ordinal]).out_edges(); }
@@ -272,10 +281,6 @@ namespace lib {
 		//currently for debugging purposes
 		//implement >>ostream operator instead
 		void print();
-
-	protected:
-		void delete_node_edges(int node_ordinal);
-
 	};
 }
 #endif

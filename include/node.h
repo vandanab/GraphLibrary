@@ -23,8 +23,8 @@ namespace lib {
 		// for now the attributes are assumed to be string key-value pairs
 		std::vector<std::pair<std::string, std::string> > attributes;
 		//vector<list<Edge<T> >::iterator> my_edges;
-		std::vector<std::list<Edge>::iterator> inEdges;
-		std::vector<std::list<Edge>::iterator> outEdges;
+		std::vector<int> in_edges;
+		std::vector<int> out_edges;
 
 	public:
 		Node() = default;
@@ -37,39 +37,38 @@ namespace lib {
 		Node<T>& operator=(Node<T> const&) = default;
 
 		//actual value constructor
-		Node(const T &n, int ord) : attributes(0), inEdges(0), outEdges(0), val(n), ordinal(ord) {}
+		Node(const T &n, int ord) : attributes(0), in_edges(0), out_edges(0), val(n), ordinal(ord) {}
 	
 		~Node() = default;
 		//void update_edges(list<Edge<T> >::iterator it);
-		void add_inEdge(std::list<Edge>::iterator it);
-		void add_outEdge(std::list<Edge>::iterator it);
+		void add_in_edge(int edge_ordinal) {
+			in_edges.push_back(edge_ordinal);
+		}
+		void add_out_edge(int edge_ordinal) {
+			out_edges.push_back(edge_ordinal);
+		}
 
 		void update_node(T n) { val = n.val; }
 
-		// the complication of this logic suggests that we should maintain list of edge ordinals instead of the Edge iterators?
-		void remove_inEdge(int edge_ordinal) {
-			for(auto i = inEdges.begin(); i != inEdges.end(); i++) {
-				if((*(*i)).get_ordinal() == edge_ordinal) {
-					inEdges.erase(i);
+		void delete_in_edge(int edge_ordinal) {
+			for(auto i = in_edges.begin(); i != in_edges.end(); i++) {
+				if(*i == edge_ordinal) {
+					in_edges.erase(i);
 				}
 			}
 		}
 
-		void remove_outEdge(int edge_ordinal) {
-			for(auto i = outEdges.begin(); i != outEdges.end(); i++) {
-				if((*(*i)).get_ordinal() == edge_ordinal) {
-					outEdges.erase(i);
+		void delete_out_edge(int edge_ordinal) {
+			for(auto i = out_edges.begin(); i != out_edges.end(); i++) {
+				if(*i == edge_ordinal) {
+					out_edges.erase(i);
 				}
 			}
 		}
 
-		std::vector<std::list<Edge>::iterator>& get_inEdges() {
-			return inEdges;
-		}
+		std::vector<int>& get_in_edges() { return in_edges; }
 
-		std::vector<std::list<Edge>::iterator>& get_outEdges() {
-			return outEdges;
-		}
+		std::vector<int>& get_out_edges() { return out_edges; }
 
 		T& get_val() { return val; }
 
@@ -86,15 +85,13 @@ namespace lib {
 
 		std::vector<std::pair<std::string, std::string>>& get_attributes();
 
-		std::vector<int> neighbors_undirected();
-		std::vector<int> neighbors_directed();
-		std::vector<int> successors();
-		std::vector<int> predecessors();
+		//std::vector<int> neighbors_undirected();
+		//std::vector<int> neighbors_directed();
 
-		std::vector<int> get_edges_undirected();
-		std::vector<int> get_edges_directed();
-		std::vector<int> in_edges();
-		std::vector<int> out_edges();
+		//all nodes it is connected to or which connect to it
+
+		//std::vector<int> get_edges_undirected();
+		//std::vector<int> get_edges_directed();
 		
 		int get_ordinal() { return ordinal; }
 
@@ -119,16 +116,6 @@ namespace lib {
 	template<class T>
 	Node<T>::~Node() {}
 	*/
-
-	template<class T>
-	void Node<T>::add_inEdge(std::list<Edge>::iterator it) {
-		inEdges.push_back(it);
-	}
-
-	template<class T>
-	void Node<T>::add_outEdge(std::list<Edge>::iterator it) {
-		outEdges.push_back(it);
-	}
 
 	//define == operator based on the user object equal
 	template<class T>
@@ -171,55 +158,26 @@ namespace lib {
 
 	template<class T>
 	void Node<T>::print() {
-		std::vector<std::list<Edge>::iterator>::iterator it;
+		//we have to find a way to print edges now.
+		//std::vector<std::list<Edge>::iterator>::iterator it;
 		std::cout << val << " -> ";
+		/*
 		for(it = inEdges.begin(); it != inEdges.end(); it++) {
 			(*(*it)).print_nodes();
 		}
 		for(it = outEdges.begin(); it != outEdges.end(); it++) {
 			(*(*it)).print_nodes();
-		}
+		}*/
 		std::cout << std::endl;
 	}
 
-	template<class T>
-	std::vector<int> Node<T>::neighbors_undirected() {
-		long size = inEdges.size() + outEdges.size();
-		std::vector<int> v(size);
-		for (long i = 0; i < inEdges.size(); i++)
-		{
-			v.push_back((*inEdges[i]).get_source_node());
-		}
-		for (long i = outEdges.size(); i < size; i++)
-		{
-			v.push_back((*outEdges[i]).get_source_node());
-		}
-		return v;
-	}
-
+	/*
 	template<class T>
 	std::vector<int> Node<T>::neighbors_directed() {
 		return successors();
-	}
+	}*/
 
-	template<class T>
-	std::vector<int> Node<T>::successors() {
-		std::vector<int> v(outEdges.size());
-		for (long i = 0; i < outEdges.size(); i++)
-			v.push_back((*outEdges[i]).get_destn_node());
-		
-		return v;
-	}
-
-	template<class T>
-	std::vector<int> Node<T>::predecessors() {
-		std::vector<int> v(inEdges.size());
-		for (long i = 0; i < inEdges.size(); i++)
-			v.push_back((*inEdges[i]).get_source_node());
-	
-		return v;
-	}
-
+	/*
 	template<class T>
 	std::vector<int> Node<T>::get_edges_undirected() {
 		long size = inEdges.size() + outEdges.size();
@@ -238,24 +196,6 @@ namespace lib {
 	template<class T>
 	std::vector<int> Node<T>::get_edges_directed() {
 		return out_edges();
-	}
-
-	template<class T>
-	std::vector<int> Node<T>::in_edges() {
-		std::vector<int> v(inEdges.size());
-		for (long i = 0; i < inEdges.size(); i++)
-			v.push_back((*inEdges[i]).get_ordinal());
-		
-		return v;
-	}
-
-	template<class T>
-	std::vector<int> Node<T>::out_edges() {
-		std::vector<int> v(outEdges.size());
-		for (long i = 0; i < outEdges.size(); i++)
-			v.push_back((*outEdges[i]).get_ordinal());
-	
-		return v;
-	}
+	}*/
 }
 #endif

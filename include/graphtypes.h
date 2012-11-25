@@ -45,14 +45,10 @@ namespace lib {
 		int num_nodes() { return g.num_nodes(); }
 		int num_edges() { return g.num_edges(); }
 
-		void remove_node(int node_ordinal) { g.remove_node(node_ordinal); }
+		void delete_node(int node_ordinal) { g.delete_node(node_ordinal); }
 		void delete_node_edges(int node_ordinal) { g.delete_node_edges(node_ordinal); }
 
-		void remove_edge(int edge_ordinal) { g.remove_edge(edge_ordinal); }
-
-		//using variadic templates
-		//void add_nodes()
-		//void add_edges()
+		void delete_edge(int edge_ordinal) { g.delete_edge(edge_ordinal); }
 
 		const T &get_node(int index) { return g.get_node(index); }
 
@@ -66,14 +62,12 @@ namespace lib {
 			return g.get_edge_attributes(index);
 		}
 
-		// how to report error if not found?
-		// should we return pair?
 		int get_node_index(const T& n) { return get_node_index(n); }
 
 		//move constructor should prevent performance issues
-		std::vector<int> neighbors(int node_ordinal) { return g.neighbors_undirected(node_ordinal); }
+		std::vector<int> neighbors(int node_ordinal) { return g.neighbors(node_ordinal); }
 
-		std::vector<int> edges(int node_ordinal) { return g.get_edges_undirected(node_ordinal); }
+		std::vector<int> edges(int node_ordinal) { return g.get_undirected_edges(node_ordinal); }
 
 		int degree(int node_ordinal) { return g.num_edges(node_ordinal); }
 	};
@@ -140,7 +134,7 @@ namespace lib {
 		int get_node_index(const T& n) { return get_node_index(n); }
 
 		//move constructor should prevent performance issues
-		std::vector<int> neighbors(int node_ordinal) { return g.neighbors_directed(node_ordinal); }
+		std::vector<int> neighbors(int node_ordinal) { return g.successors(node_ordinal); }
 		std::vector<int> successors(int node_ordinal) { return g.successors(node_ordinal); }
 		std::vector<int> predecessors(int node_ordinal) { return g.predecessors(node_ordinal); }
 
@@ -148,8 +142,8 @@ namespace lib {
 		std::vector<int> in_edges(int node_ordinal) { return g.in_edges(node_ordinal); }
 		std::vector<int> out_edges(int node_ordinal) { return g.out_edges(node_ordinal); }
 
-		int in_degree(int node_ordinal) { return g.num_inEdges(node_ordinal); }
-		int out_degree(int node_ordinal) { return g.num_outEdges(node_ordinal); }
+		int in_degree(int node_ordinal) { return g.num_in_edges(node_ordinal); }
+		int out_degree(int node_ordinal) { return g.num_out_edges(node_ordinal); }
 		int degree(int node_ordinal) { return g.num_edges(node_ordinal); }
 	};
 }

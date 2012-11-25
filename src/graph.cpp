@@ -46,19 +46,19 @@ namespace lib {
 
 	//we can experiment with batch add later
 	template<class T>
-	std::vector<int>& Graph<T>::add_nodes(std::vector<T> nodes) {
-		std::vector<int> ordinals(nodes.size());
-		for(int i = 0; i < nodes.size(); i++) {
-			ordinals.push_back(add_node(nodes[i]));
+	std::vector<int>& Graph<T>::add_nodes(std::vector<T> nodes_) {
+		std::vector<int> ordinals(nodes_.size());
+		for(int i = 0; i < nodes_.size(); i++) {
+			ordinals.push_back(add_node(nodes_[i]));
 		}
 		return ordinals;
 	}
 
 	template<class T>
 		template<typename... Nodes>
-		std::vector<int>& Graph<T>::add_nodes(T n, Nodes... nodes) {
-			std::vector<int> ordinals(sizeof...(nodes)+1);
-			_add_nodes(n, nodes..., ordinals);
+		std::vector<int>& Graph<T>::add_nodes(T n, Nodes... nodes_) {
+			std::vector<int> ordinals(sizeof...(nodes_)+1);
+			_add_nodes(n, nodes_..., ordinals);
 			return ordinals;
 		}
 	
@@ -76,16 +76,62 @@ namespace lib {
 	template<class T>
 	void Graph<T>::delete_node_edges(int node_ordinal) {
 		NodeIterType node_itr = nodes[node_ordinal];
-		auto edges = (*node_itr).get_inEdges();
-		for(auto i = edges.begin(); i != edges.end(); i++) {
-			edges[(*(*i)).get_ordinal()] = edge_list.end();
-			edge_list.erase(*i);
+		if(node_itr == node_list.end())
+			throw InvalidAccessException("Node does not exist");
+		auto in_edges = (*node_itr).get_in_edges();
+		auto out_edges = (*node_itr).get_out_edges();
+		for(int i = 0; i < in_edges.size(); i++)
+			std::cout<<in_edges[i];
+		for(auto i = in_edges.begin(); i != in_edges.end(); i++) {
+			edge_list.erase(edges[*i]);
+		  edges[*i] = edge_list.end();
 		}
-		edges = (*node_itr).get_outEdges();
-		for(auto i = edges.begin(); i != edges.end(); i++) {
-			edges[(*(*i)).get_ordinal()] = edge_list.end();
-			edge_list.erase(*i);
+		for(auto i = out_edges.begin(); i != out_edges.end(); i++) {
+			edge_list.erase(edges[*i]);
+		  edges[*i] = edge_list.end();
 		}
+	}
+
+	template<class T>
+	//std::vector<int> Node<T>::neighbors_undirected() {
+	std::vector<int> Graph<T>::neighbors(int node_ordinal) {
+		if(nodes[node_ordinal] == node_list.end())
+			throw InvalidAccessException("Node does not exist");
+		auto in_edges = (*nodes[node_ordinal]).get_in_edges();
+		auto out_edges = (*nodes[node_ordinal]).get_out_edges();
+		auto size = in_edges.size() + out_edges.size();
+		std::vector<int> v(size);
+		for (int i = 0; i < in_edges.size(); i++)
+		{
+			v.push_back((*(edges[in_edges[i]])).get_source_node());
+		}
+		for (int i = in_edges.size(); i < size; i++)
+		{
+			v.push_back((*(edges[out_edges[i-in_edges.size()]])).get_destn_node());
+		}
+		return v;
+	}
+
+	template<class T>
+	std::vector<int> Graph<T>::successors(int node_ordinal) {
+		if(nodes[node_ordinal] == node_list.end())
+			throw InvalidAccessException("Node does not exist");
+		auto out_edges = (*nodes[node_ordinal]).get_out_edges();
+		std::vector<int> v(out_edges.size());
+		for (int i = 0; i < out_edges.size(); i++)
+			v.push_back((*(edges[out_edges[i]])).get_destn_node());
+		return v;
+	}
+
+	template<class T>
+	std::vector<int> Graph<T>::predecessors(int node_ordinal) {
+		if(nodes[node_ordinal] == node_list.end())
+			throw InvalidAccessException("Node does not exist");
+		auto in_edges = (*nodes[node_ordinal]).get_in_edges();
+		std::vector<int> v(in_edges.size());
+		for (int i = 0; i < in_edges.size(); i++)
+			v.push_back((*(edges[in_edges[i]])).get_source_node());
+		return v;
 	}
 
 	template<class T>
@@ -96,46 +142,42 @@ namespace lib {
 		edge_list.push_back(edge);
 		auto it = --edge_list.end();
 		edges.push_back(it);
-
-		(*nodes[node1_ordinal]).add_outEdge(it);
-		(*nodes[node2_ordinal]).add_inEdge(it);
-		
+		(*nodes[node1_ordinal]).add_out_edge(ord);
+		(*nodes[node2_ordinal]).add_in_edge(ord);	
 		return ord;
 	}
 
 	template<class T>
-	std::vector<int>& Graph<T>::add_edges(std::vector<std::pair<int, int>> edges) {
-		std::vector<int> ordinals(edges.size());
-		for(int i = 0; i < edges.size(); i++) {
-			ordinals.push_back(add_edge(edges[i].first, edges[i].second));
+	std::vector<int>& Graph<T>::add_edges(std::vector<std::pair<int, int>> edges_) {
+		std::vector<int> ordinals(edges_.size());
+		for(int i = 0; i < edges_.size(); i++) {
+			ordinals.push_back(add_edge(edges_[i].first, edges_[i].second));
 		}
 		return ordinals;
 	}
 
 	template<class T>
 		template<typename... Edges>
-		std::vector<int>& Graph<T>::add_edges(std::pair<int, int> e, Edges... edges) {
-			std::vector<int> ordinals(sizeof...(edges)+1);
-			_add_edges(e, edges..., ordinals);
+		std::vector<int>& Graph<T>::add_edges(std::pair<int, int> e, Edges... edges_) {
+			std::vector<int> ordinals(sizeof...(edges_)+1);
+			_add_edges(e, edges_..., ordinals);
 			return ordinals;
 		}
 
 	//assumes unidirectional edges
 	template<class T>
 	void Graph<T>::delete_edge(int edge_ordinal) {
+		if(edges[edge_ordinal] == edge_list.end())
+			throw InvalidAccessException("Edge does not exist");
 		//remove itself from the vector in node object
 		int src_ordinal = (*edges[edge_ordinal]).get_source_node();
-		(*nodes[src_ordinal]).remove_outEdge(edge_ordinal);
+		(*nodes[src_ordinal]).delete_out_edge(edge_ordinal);
 		int dest_ordinal = (*edges[edge_ordinal]).get_destn_node();
-		(*nodes[dest_ordinal]).remove_inEdge(edge_ordinal);
+		(*nodes[dest_ordinal]).delete_in_edge(edge_ordinal);
 
 		edge_list.erase(edges[edge_ordinal]);
 		edges[edge_ordinal] = edge_list.end();
 	}
-
-	//using variadic templates
-	//void add_nodes()
-	//void add_edges()
 
 	template<class T>
 	const T& Graph<T>::get_node(int node_ordinal) {
@@ -156,8 +198,10 @@ namespace lib {
 	}
 
 	template<class T>
-	const std::vector<std::pair<std::string, std::string>>& Graph<T>::get_node_attributes(int edge_ordinal) {
-		return const_cast<std::vector<std::pair<std::string, std::string>>>((*nodes[edge_ordinal]).get_attributes());
+	const std::vector<std::pair<std::string, std::string>>& Graph<T>::get_node_attributes(int node_ordinal) {
+		if(nodes[node_ordinal] == node_list.end())
+			throw InvalidAccessException("Node does not exist");
+		return const_cast<std::vector<std::pair<std::string, std::string>>>((*nodes[node_ordinal]).get_attributes());
 	}
 
 	template<class T>
@@ -167,6 +211,8 @@ namespace lib {
 
 	template<class T>
 	const std::vector<std::pair<std::string, std::string>>& Graph<T>::get_edge_attributes(int index) {
+		if(edges[index] == edge_list.end())
+			throw InvalidAccessException("Edge does not exist");
 		return const_cast<std::vector<std::pair<std::string, std::string>>>((*edges[index]).get_attributes());
 	}
 
@@ -187,7 +233,12 @@ namespace lib {
 	template<class T>
 	void Graph<T>::print() {
 		for(auto n_it = node_list.begin(); n_it != node_list.end(); n_it++) {
-			(*n_it).print();
+			std::vector<int> v_edges = (*n_it).get_out_edges();
+		 	std::cout<<(*n_it).get_ordinal()<<" -> ";
+			for(int i = 0; i < v_edges.size(); i++) {
+				(*edges[v_edges[i]]).print_nodes();
+			}
+			std::cout<<std::endl;
 		}
 	}
 }
