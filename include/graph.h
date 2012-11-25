@@ -8,6 +8,7 @@
 #include<list>
 #include<vector>
 #include "edge.h"
+#include "exceptions.h"
 #include "node.h"
 
 #ifndef GRAPH_H
@@ -44,6 +45,22 @@ namespace lib {
 		}
 
 		void _add_edges() {}
+
+		void _delete_edge(int edge_ordinal, bool in=false, bool out=false) {
+			if(edges[edge_ordinal] == edge_list.end())
+				throw InvalidAccessException("Edge does not exist");
+			//remove itself from the vector in node object
+			if(in) {
+				int src_ordinal = (*edges[edge_ordinal]).get_source_node();
+				(*nodes[src_ordinal]).delete_out_edge(edge_ordinal);
+			}
+			if(out) {
+				int dest_ordinal = (*edges[edge_ordinal]).get_destn_node();
+				(*nodes[dest_ordinal]).delete_in_edge(edge_ordinal);
+			}
+			edge_list.erase(edges[edge_ordinal]);
+			edges[edge_ordinal] = edge_list.end();
+		}
 
 	public:
 		//define copy, move and default constructors
@@ -254,13 +271,13 @@ namespace lib {
 		std::vector<int> successors(int node_ordinal) { return (*nodes[node_ordinal]).successors(); }
 		std::vector<int> predecessors(int node_ordinal) {  return (*nodes[node_ordinal]).predecessors(); }*/
 
-		std::vector<int>& get_edges_undirected(int node_ordinal) { 
+		std::vector<int> get_edges_undirected(int node_ordinal) { 
 			std::vector<int> edges_ = (*nodes[node_ordinal]).get_in_edges();
 			std::vector<int> edgeso_ = (*nodes[node_ordinal]).get_out_edges();
 			edges_.insert(edges_.end(), edgeso_.begin(), edgeso_.end());
 			return edges_;
 		}
-		std::vector<int>& get_edges_directed(int node_ordinal) { 
+		std::vector<int> get_edges_directed(int node_ordinal) { 
 			return (*nodes[node_ordinal]).get_out_edges();
 		}
 		std::vector<int> in_edges(int node_ordinal) { return (*nodes[node_ordinal]).in_edges(); }

@@ -51,21 +51,17 @@ namespace lib {
 		void update_node(T n) { val = n.val; }
 
 		void delete_in_edge(int edge_ordinal) {
-			for(auto i = in_edges.begin(); i != in_edges.end(); i++) {
-				if(*i == edge_ordinal) {
-					in_edges.erase(i);
+			for(int i = 0; i < in_edges.size(); i++) {
+				if(in_edges[i] == edge_ordinal) {
+					in_edges.erase(in_edges.begin() + i);
 				}
 			}
 		}
 
-		void delete_in_edges() { in_edges.clear(); }
-		void delete_out_edges() { out_edges.clear(); }
-
 		void delete_out_edge(int edge_ordinal) {
-			for(auto i = out_edges.begin(); i != out_edges.end(); i++) {
-				if(*i == edge_ordinal) {
-					out_edges.erase(i);
-				}
+			for(int i = 0; i < out_edges.size(); i++) {
+				if(out_edges[i] == edge_ordinal)
+					out_edges.erase(out_edges.begin() + i);
 			}
 		}
 

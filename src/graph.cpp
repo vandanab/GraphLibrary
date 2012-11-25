@@ -79,17 +79,12 @@ namespace lib {
 			throw InvalidAccessException("Node does not exist");
 		std::vector<int> in_edges = (*nodes[node_ordinal]).get_in_edges();
 		std::vector<int> out_edges = (*nodes[node_ordinal]).get_out_edges();
-			for(int i = 0; i < in_edges.size(); i++) {
-				std::cout<<in_edges[i];
-				delete_edge(in_edges[i]);
-			}
-	/*	
-		for(auto i = 0; i != in_edges.size(); i++) {
-			delete_edge(in_edges[i]);
+		for(int i = 0; i < in_edges.size(); i++) {
+			_delete_edge(in_edges[i], true, false);
+		}	
+		for(int i = 0; i != out_edges.size(); i++) {
+			_delete_edge(out_edges[i], false, true);
 		}
-		for(auto i = out_edges.begin(); i != out_edges.end(); i++) {
-			delete_edge(*i);
-		}*/
 	}
 
 	template<class T>
@@ -105,9 +100,9 @@ namespace lib {
 		{
 			v.push_back((*(edges[in_edges[i]])).get_source_node());
 		}
-		for (int i = in_edges.size(); i < size; i++)
+		for (int i = 0; i < out_edges.size(); i++)
 		{
-			v.push_back((*(edges[out_edges[i-in_edges.size()]])).get_destn_node());
+			v.push_back((*(edges[out_edges[i]])).get_destn_node());
 		}
 		return v;
 	}
@@ -167,8 +162,6 @@ namespace lib {
 	//assumes unidirectional edges
 	template<class T>
 	void Graph<T>::delete_edge(int edge_ordinal) {
-		std::cout<<"in delete edge\n";
-		/*
 		if(edges[edge_ordinal] == edge_list.end())
 			throw InvalidAccessException("Edge does not exist");
 		//remove itself from the vector in node object
@@ -178,10 +171,8 @@ namespace lib {
 		int dest_ordinal = (*edges[edge_ordinal]).get_destn_node();
 		if(nodes[dest_ordinal] != node_list.end())
 			(*nodes[dest_ordinal]).delete_in_edge(edge_ordinal);
-
 		edge_list.erase(edges[edge_ordinal]);
 		edges[edge_ordinal] = edge_list.end();
-		*/
 	}
 
 	template<class T>
@@ -286,7 +277,7 @@ int main()
 	g1.print();
 
 	g1.delete_node(n1[4]);
-	//g1.delete_edge(e1[2]);
+	g1.delete_edge(e1[2]);
 
 	try {
 		std::cout << g1.get_node(n1[4]);
