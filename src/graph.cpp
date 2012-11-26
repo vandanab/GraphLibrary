@@ -41,7 +41,7 @@ int main() {
 	g.print();
 	return 0;
 }*/
-
+/*
 int main()
 {
 	//en.wikipedia.org/wiki/Graph_theory
@@ -84,3 +84,4 @@ int main()
 
 	return 0;
 }
+*/
