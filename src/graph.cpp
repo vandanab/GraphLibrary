@@ -80,10 +80,10 @@ namespace lib {
 		std::vector<int> in_edges = (*nodes[node_ordinal]).get_in_edges();
 		std::vector<int> out_edges = (*nodes[node_ordinal]).get_out_edges();
 		for(int i = 0; i < in_edges.size(); i++) {
-			_delete_edge(in_edges[i], true, false);
+			delete_edge(in_edges[i]);
 		}	
 		for(int i = 0; i != out_edges.size(); i++) {
-			_delete_edge(out_edges[i], false, true);
+			delete_edge(out_edges[i]);
 		}
 	}
 

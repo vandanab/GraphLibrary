@@ -46,22 +46,6 @@ namespace lib {
 
 		void _add_edges() {}
 
-		void _delete_edge(int edge_ordinal, bool in=false, bool out=false) {
-			if(edges[edge_ordinal] == edge_list.end())
-				throw InvalidAccessException("Edge does not exist");
-			//remove itself from the vector in node object
-			if(in) {
-				int src_ordinal = (*edges[edge_ordinal]).get_source_node();
-				(*nodes[src_ordinal]).delete_out_edge(edge_ordinal);
-			}
-			if(out) {
-				int dest_ordinal = (*edges[edge_ordinal]).get_destn_node();
-				(*nodes[dest_ordinal]).delete_in_edge(edge_ordinal);
-			}
-			edge_list.erase(edges[edge_ordinal]);
-			edges[edge_ordinal] = edge_list.end();
-		}
-
 	public:
 		//define copy, move and default constructors
 		Graph() {}
