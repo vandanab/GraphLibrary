@@ -1,6 +1,6 @@
 /**
- * node.cpp
+ * graphs.cpp
  * @author: GraphLib Team (?)
  * remove later
  */
-#include "graphtypes.h"
+#include "graphs.h"

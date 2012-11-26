@@ -3,17 +3,14 @@
  * @author GraphLib Team (?)
  * @version 0.1 11/21/2012
 */
-/*
+
 #include<iostream>
 #include"graph.h"
-
-using namespace lib;
-using namespace std;
 
 int main()
 {
 	//en.wikipedia.org/wiki/Graph_theory
-	Graph<int> g1;
+	lib::Graph<int> g1;
 	int n1[6];	//node_ordinals
 	int e1[7];	//edge_ordinals
 
@@ -34,21 +31,21 @@ int main()
 	e1[5] = g1.add_edge(n1[3], n1[4]);
 	e1[6] = g1.add_edge(n1[3], n1[5]);
 
-	cout << "no. of nodes: " << g1.num_nodes() << "no. of edges: " << g1.num_edges();
+	std::cout << "no. of nodes: " << g1.num_nodes() << " no. of edges: " << g1.num_edges() << std::endl;
 	g1.print();
 
-	g1.remove_node(n1[4]);
-	g1.remove_edge(e1[2]);
+	g1.delete_node(n1[4]);
+	g1.delete_edge(e1[2]);
 
 	try {
-		cout << g1.get_node(n1[4]);
+		std::cout << g1.get_node(n1[4]);
 	}
 	catch(...) {
-		cout << "expected exception on accessing deleted element";
+		std::cout << "expected exception on accessing deleted element" << std::endl;
 	}
 
-	cout << "no. of nodes: " << g1.num_nodes() << "no. of edges: " << g1.num_edges();
+	std::cout << "no. of nodes: " << g1.num_nodes() << " no. of edges: " << g1.num_edges() << std::endl;
 	g1.print();
 
 	return 0;
-}*/
+}
