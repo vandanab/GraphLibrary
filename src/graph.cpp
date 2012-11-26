@@ -1,16 +1,51 @@
 /**
- * Unit Test for GraphLib
- * @author GraphLib Team (?)
- * @version 0.1 11/21/2012
-*/
-
+ * graph.cpp
+ * @author: GraphLib Team(?)
+ * Implementation of the graph interface.
+ */
 #include<iostream>
-#include "graphs.h"
+#include "graph.h"
 
+/*
+namespace lib {
+	//understand difference between default and the following defined constructor
+	//and accordingly make the choice.
+
+	template<class T>
+	Graph<T>::Graph() : edge_list({}), node_list({}), nodes({}), edges({}) {
+	}
+
+	//define destructor
+	template<class T>
+	Graph<T>::~Graph() {}
+
+	Graph<T>::Graph(std::vector<T> v) : node_list(v.size()), edge_list(0), nodes(v.size()), edges(0) {
+		for(i = 0; i < v.size(); i++) {
+			add_node(v[i]);
+		}
+	}
+
+	template<typename... Nodes>
+	Graph<T>::Graph(Nodes... nodes) : node_list(sizeof...(nodes)), edge_list(0), nodes(sizeof...(nodes)), edges(0) {
+		add_nodes(nodes);
+	}
+}*/
+
+/*
+int main() {
+	lib::Graph<std::string> g;
+	std::string node1 = "red", node2 = "blue";
+	int n1 = g.add_node(node1);
+	int n2 = g.add_node(node2);
+	g.add_edge(n1, n2);
+	g.print();
+	return 0;
+}*/
+/*
 int main()
 {
 	//en.wikipedia.org/wiki/Graph_theory
-	lib::UndirectedGraph<int> g1;
+	lib::Graph<int> g1;
 	int n1[6];	//node_ordinals
 	int e1[7];	//edge_ordinals
 
@@ -49,3 +84,4 @@ int main()
 
 	return 0;
 }
+*/

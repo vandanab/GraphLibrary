@@ -70,6 +70,8 @@ namespace lib {
 		std::vector<int> edges(int node_ordinal) { return g.get_edges_undirected(node_ordinal); }
 
 		int degree(int node_ordinal) { return g.num_edges(node_ordinal); }
+
+		void print() { g.print(); }
 	};
 
 	template <class T>
