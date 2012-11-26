@@ -31,10 +31,10 @@ namespace lib {
 
 		typedef typename Graph<T>::node_iterator node_iterator;
 		typedef typename Graph<T>::edge_iterator edge_iterator;
-		node_iterator& nodes_begin() { return g.nodes_begin(); }
-		node_iterator& nodes_end() { return g.nodes_end(); }
-		edge_iterator& edges_begin() { return g.edges_begin(); }
-		edge_iterator& edges_end() { return g.edges_end(); }
+		node_iterator nodes_begin() { return g.nodes_begin(); }
+		node_iterator nodes_end() { return g.nodes_end(); }
+		edge_iterator edges_begin() { return g.edges_begin(); }
+		edge_iterator edges_end() { return g.edges_end(); }
 
 		//returns ordinal(index) of the newly added node
 		int add_node(T &n) { return g.add_node(n); }
@@ -94,10 +94,10 @@ namespace lib {
 
 		typedef typename Graph<T>::node_iterator node_iterator;
 		typedef typename Graph<T>::edge_iterator edge_iterator;
-		node_iterator& nodes_begin() { return g.nodes_begin(); }
-		node_iterator& nodes_end() { return g.nodes_end(); }
-		edge_iterator& edges_begin() { return g.edges_begin(); }
-		edge_iterator& edges_end() { return g.edges_end(); }
+		node_iterator nodes_begin() { return g.nodes_begin(); }
+		node_iterator nodes_end() { return g.nodes_end(); }
+		edge_iterator edges_begin() { return g.edges_begin(); }
+		edge_iterator edges_end() { return g.edges_end(); }
 
 		//returns ordinal(index) of the newly added node
 		int add_node(T &n) { return g.add_node(n); }

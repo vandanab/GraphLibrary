@@ -122,19 +122,19 @@ namespace lib {
 
 		//should we provide const_edge_iterator?
 
-		node_iterator& nodes_begin() {
+		node_iterator nodes_begin() {
 			node_iterator it(this->node_list.begin());
 			return it;
 		}
-		node_iterator& nodes_end() {
+		node_iterator nodes_end() {
 			node_iterator it(this->node_list.end());
 			return it;
 		}
-		edge_iterator& edges_begin() {
+		edge_iterator edges_begin() {
 			edge_iterator it(this->edge_list.begin());
 			return it;
 		}
-		edge_iterator& edges_end() {
+		edge_iterator edges_end() {
 			edge_iterator it(this->edge_list.end());
 			return it;
 		}

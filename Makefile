@@ -5,7 +5,7 @@ CC=g++-4.7 -std=c++11
 TARGET=graph_test
 #TARGET=graph
 OBJDIR=objs
-OBJS=$(addprefix $(OBJDIR)/,graph.o graphs.o edge.o node.o unit_test.o)
+OBJS=$(addprefix $(OBJDIR)/,graph.o graphs.o edge.o node.o unit_test.o topologicalsort.o)
 SRCDIR=src
 TESTDIR=test
 INCDIR=include

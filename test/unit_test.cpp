@@ -6,11 +6,12 @@
 
 #include<iostream>
 #include "graphs.h"
+#include "topologicalsort.h"
 
 int main()
 {
 	//en.wikipedia.org/wiki/Graph_theory
-	lib::UndirectedGraph<int> g1;
+	lib::DirectedGraph<int> g1;
 	int n1[6];	//node_ordinals
 	int e1[7];	//edge_ordinals
 
@@ -29,13 +30,13 @@ int main()
 	e1[3] = g1.add_edge(n1[1], n1[4]);
 	e1[4] = g1.add_edge(n1[2], n1[3]);
 	e1[5] = g1.add_edge(n1[3], n1[4]);
-	e1[6] = g1.add_edge(n1[3], n1[5]);
+	//e1[6] = g1.add_edge(n1[3], n1[5]);
 
 	std::cout << "no. of nodes: " << g1.num_nodes() << " no. of edges: " << g1.num_edges() << std::endl;
 	g1.print();
 
-	g1.delete_node(n1[4]);
-	g1.delete_edge(e1[2]);
+	//g1.delete_node(n1[4]);
+	//g1.delete_edge(e1[2]);
 
 	try {
 		std::cout << g1.get_node(n1[4]);
@@ -47,5 +48,9 @@ int main()
 	std::cout << "no. of nodes: " << g1.num_nodes() << " no. of edges: " << g1.num_edges() << std::endl;
 	g1.print();
 
+	std::vector<int> v = lib::topological_sort(g1);
+	for (int i = 0; i < v.size(); i++) {
+	    std::cout << v[i] << std::endl;
+	}
 	return 0;
 }
