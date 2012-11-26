@@ -5,7 +5,7 @@ CC=g++-4.7 -std=c++0x
 #TARGET=graph_test
 TARGET=graph
 OBJDIR=objs
-OBJS=$(addprefix $(OBJDIR)/,graph.o graphtypes.o edge.o node.o unit_test.o)
+OBJS=$(addprefix $(OBJDIR)/,graph.o graphs.o edge.o node.o unit_test.o)
 SRCDIR=src
 TESTDIR=test
 INCDIR=include
@@ -28,7 +28,7 @@ $(OBJDIR)/node.o: $(SRCDIR)/node.cpp
 $(OBJDIR)/unit_test.o: $(TESTDIR)/unit_test.cpp
 	$(CC) -g -I$(INCDIR) -c -o $@ $^
 
-$(OBJDIR)/graphtypes.o: $(SRCDIR)/graphtypes.cpp
+$(OBJDIR)/graphs.o: $(SRCDIR)/graphs.cpp
 	$(CC) -g -I$(INCDIR) -c -o $@ $^
 
 $(OBJDIR)/graph.o: $(SRCDIR)/graph.cpp
