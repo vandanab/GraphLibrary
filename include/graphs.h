@@ -141,6 +141,7 @@ namespace lib {
 		int in_degree(int node_ordinal) { return g.num_in_edges(node_ordinal); }
 		int out_degree(int node_ordinal) { return g.num_out_edges(node_ordinal); }
 		int degree(int node_ordinal) { return g.num_edges(node_ordinal); }
+		void print() { g.print(); }
 	};
 }
 #endif
