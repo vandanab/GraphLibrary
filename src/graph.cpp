@@ -9,6 +9,7 @@
 #include "node.h"
 #include "graph.h"
 #include "exceptions.h"
+#include "topologicalsort.cpp"
 
 namespace lib {
 	//understand difference between default and the following defined constructor
@@ -279,19 +280,25 @@ int main()
 
 	std::cout << "no. of nodes: " << g1.num_nodes() << " no. of edges: " << g1.num_edges() << std::endl;
 	g1.print();
+	std::cout << "\n";
+	// g1.delete_node(n1[4]);
+	// g1.delete_edge(e1[2]);
 
-	g1.delete_node(n1[4]);
-	g1.delete_edge(e1[2]);
-
-	try {
+	/*try {
 		std::cout << g1.get_node(n1[4]);
 	}
 	catch(...) {
-		std::cout << "expected exception on accessing deleted element" << std::endl;
+		std::cout << "\n expected exception on accessing deleted element" << std::endl;
 	}
 
 	std::cout << "no. of nodes: " << g1.num_nodes() << " no. of edges: " << g1.num_edges() << std::endl;
-	g1.print();
+	g1.print();*/
+
+	/*std::vector<int> v = lib::topologicalsort(g1);
+	for(int i=v.begin(); i != v.end(); i++) {
+		std::cout << v[i] << " ";
+	}
+	std::cout << "\n";*/
 
 	return 0;
 }

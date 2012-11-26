@@ -1,6 +1,6 @@
 #Makefile
 #please dont delete the two types of compiler, they are different for ubuntu and ming.
-CC=g++-4.7 -std=c++0x
+CC=g++-4.7 -std=c++11
 #CC=g++
 #TARGET=graph_test
 TARGET=graph
@@ -29,6 +29,9 @@ $(OBJDIR)/unit_test.o: $(TESTDIR)/unit_test.cpp
 	$(CC) -g -I$(INCDIR) -c -o $@ $^
 
 $(OBJDIR)/graphtypes.o: $(SRCDIR)/graphtypes.cpp
+	$(CC) -g -I$(INCDIR) -c -o $@ $^
+
+$(OBJDIR)/topologicalsort.o: $(SRCDIR)/topologicalsort.cpp
 	$(CC) -g -I$(INCDIR) -c -o $@ $^
 
 $(OBJDIR)/graph.o: $(SRCDIR)/graph.cpp
