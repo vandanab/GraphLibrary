@@ -35,7 +35,7 @@ $(OBJDIR)/graph.o: $(SRCDIR)/graph.cpp
 	$(CC) -g -I$(INCDIR) -c -o $@ $^
 
 clean:
-	rm graph $(OBJS)
+	rm $(TARGET) $(OBJS)
 
 #node: node.o edge.o
 #	$(CC) -g -o node node.o edge.o
