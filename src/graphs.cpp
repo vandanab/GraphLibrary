@@ -1,5 +1,5 @@
 /**
- * node.cpp
+ * graphs.cpp
  * @author: GraphLib Team (?)
  * remove later
  */

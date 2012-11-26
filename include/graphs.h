@@ -1,11 +1,11 @@
 /**
- * graphtypes.h provides the interface for the basic graph types
+ * graphs.h provides the interface for the basic graph types
  * @author GraphLib Team (?)
  * @version 0.1 11/23/2012
  */
 
-#ifndef _GRAPHTYPES_H
-#define _GRAPHTYPES_H
+#ifndef _GRAPHS_H
+#define _GRAPHS_H
 
 #include"graph.h"
 #include<vector>
@@ -113,10 +113,6 @@ namespace lib {
 
 		void remove_edge(int edge_ordinal) { g.remove_edge(edge_ordinal); }
 
-		//using variadic templates
-		//void add_nodes()
-		//void add_edges()
-
 		const T &get_node(int index) { return g.get_node(index); }
 
 		const std::pair<int, int>& get_edge(int index) { return g.get_edge(index); }
@@ -129,8 +125,6 @@ namespace lib {
 			return g.get_edge_attributes(index);
 		}
 
-		// how to report error if not found?
-		// should we return pair?
 		int get_node_index(const T& n) { return get_node_index(n); }
 
 		//move constructor should prevent performance issues
