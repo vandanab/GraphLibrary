@@ -5,7 +5,7 @@ CC=g++-4.7 -std=c++11
 TARGET=graph_test
 #TARGET=graph
 OBJDIR=objs
-OBJS=$(addprefix $(OBJDIR)/,graph.o graphs.o edge.o node.o unit_test.o topologicalsort.o depthfirsttraversal.o)
+OBJS=$(addprefix $(OBJDIR)/,graph.o graphs.o edge.o node.o unit_test.o topologicalsort.o depthfirsttraversal.o breadthfirsttraversal.o)
 SRCDIR=src
 TESTDIR=test
 INCDIR=include
@@ -35,6 +35,9 @@ $(OBJDIR)/topologicalsort.o: $(SRCDIR)/topologicalsort.cpp
 	$(CC) -g -I$(INCDIR) -c -o $@ $^
 
 $(OBJDIR)/depthfirsttraversal.o: $(SRCDIR)/depthfirsttraversal.cpp
+	$(CC) -g -I$(INCDIR) -c -o $@ $^
+
+$(OBJDIR)/breadthfirsttraversal.o: $(SRCDIR)/breadthfirsttraversal.cpp
 	$(CC) -g -I$(INCDIR) -c -o $@ $^
 
 $(OBJDIR)/graph.o: $(SRCDIR)/graph.cpp

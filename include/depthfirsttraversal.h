@@ -5,8 +5,8 @@
  *      Author:
  */
 
-#ifndef DEPTHFIRSTSEARCH_H_
-#define DEPTHFIRSTSEARCH_H_
+#ifndef DEPTHFIRSTTRAVERSAL_H_
+#define DEPTHFIRSTTRAVERSAL_H_
 
 #include <vector>
 #include "node.h"
@@ -52,4 +52,4 @@ std::vector<int> depthfirsttraversal(T g, int node_ordinal) {
 }
 }
 
-#endif /* DEPTHFIRSTSEARCH_H_ */
+#endif /* DEPTHFIRSTTRAVERSAL_H_ */
