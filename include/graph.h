@@ -362,7 +362,7 @@ namespace lib {
 		if(nodes[node_ordinal] == node_list.end())
 			throw InvalidAccessException("Node does not exist");
 		auto out_edges = (*nodes[node_ordinal]).get_out_edges();
-		std::vector<int> v(out_edges.size());
+		std::vector<int> v;
 		for (int i = 0; i < out_edges.size(); i++)
 			v.push_back((*(edges[out_edges[i]])).get_destn_node());
 		return v;
@@ -373,7 +373,7 @@ namespace lib {
 		if(nodes[node_ordinal] == node_list.end())
 			throw InvalidAccessException("Node does not exist");
 		auto in_edges = (*nodes[node_ordinal]).get_in_edges();
-		std::vector<int> v(in_edges.size());
+		std::vector<int> v;
 		for (int i = 0; i < in_edges.size(); i++)
 			v.push_back((*(edges[in_edges[i]])).get_source_node());
 		return v;
