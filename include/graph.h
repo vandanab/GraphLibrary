@@ -297,7 +297,8 @@ namespace lib {
 	//we can experiment with batch add later
 	template<class T>
 	std::vector<int>& Graph<T>::add_nodes(std::vector<T> nodes_) {
-		std::vector<int> ordinals(nodes_.size());
+		std::vector<int> ordinals;
+		ordinals.reserve(nodes_.size());
 		for(int i = 0; i < nodes_.size(); i++) {
 			ordinals.push_back(add_node(nodes_[i]));
 		}
@@ -307,7 +308,8 @@ namespace lib {
 	template<class T>
 		template<typename... Nodes>
 		std::vector<int>& Graph<T>::add_nodes(T n, Nodes... nodes_) {
-			std::vector<int> ordinals(sizeof...(nodes_)+1);
+			std::vector<int> ordinals;
+			ordinals.reserve(sizeof...(nodes_)+1);
 			_add_nodes(n, nodes_..., ordinals);
 			return ordinals;
 		}
@@ -345,7 +347,8 @@ namespace lib {
 		auto in_edges = (*nodes[node_ordinal]).get_in_edges();
 		auto out_edges = (*nodes[node_ordinal]).get_out_edges();
 		auto size = in_edges.size() + out_edges.size();
-		std::vector<int> v(size);
+		std::vector<int> v;
+		v.reserve(size);
 		for (int i = 0; i < in_edges.size(); i++)
 		{
 			v.push_back((*(edges[in_edges[i]])).get_source_node());
@@ -363,6 +366,7 @@ namespace lib {
 			throw InvalidAccessException("Node does not exist");
 		auto out_edges = (*nodes[node_ordinal]).get_out_edges();
 		std::vector<int> v;
+		v.reserve(out_edges.size());
 		for (int i = 0; i < out_edges.size(); i++)
 			v.push_back((*(edges[out_edges[i]])).get_destn_node());
 		return v;
@@ -374,6 +378,7 @@ namespace lib {
 			throw InvalidAccessException("Node does not exist");
 		auto in_edges = (*nodes[node_ordinal]).get_in_edges();
 		std::vector<int> v;
+		v.reserve(in_edges.size());
 		for (int i = 0; i < in_edges.size(); i++)
 			v.push_back((*(edges[in_edges[i]])).get_source_node());
 		return v;
@@ -394,7 +399,8 @@ namespace lib {
 
 	template<class T>
 	std::vector<int>& Graph<T>::add_edges(std::vector<std::pair<int, int>> edges_) {
-		std::vector<int> ordinals(edges_.size());
+		std::vector<int> ordinals;
+		ordinals.reserve(edges_.size());
 		for(int i = 0; i < edges_.size(); i++) {
 			ordinals.push_back(add_edge(edges_[i].first, edges_[i].second));
 		}
@@ -404,7 +410,8 @@ namespace lib {
 	template<class T>
 		template<typename... Edges>
 		std::vector<int>& Graph<T>::add_edges(std::pair<int, int> e, Edges... edges_) {
-			std::vector<int> ordinals(sizeof...(edges_)+1);
+			std::vector<int> ordinals;
+			ordinals.reserve(sizeof...(edges_)+1);
 			_add_edges(e, edges_..., ordinals);
 			return ordinals;
 		}
