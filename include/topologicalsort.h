@@ -26,27 +26,26 @@ std::vector<int> topological_sort(DirectedGraph<T> g) {
         int node_ordinal = *nodeiter;
         int indegree = g.in_degree(node_ordinal);
         node_indegree[node_ordinal] = indegree;
-        //std::cout << "node " << node_ordinal << " : indegree " << indegree << "\n";
         if(indegree == 0) {
-        	if (current_zero_indegree_node_index == -1) {
-        		current_zero_indegree_node_index++;
-        	}
-        	topological_order_of_nodes.push_back(node_ordinal);
+            if (current_zero_indegree_node_index == -1) {
+                current_zero_indegree_node_index++;
+            }
+            topological_order_of_nodes.push_back(node_ordinal);
         }
     }
 
     while (current_zero_indegree_node_index < topological_order_of_nodes.size()) {
-    	auto node_ordinal =
-    		topological_order_of_nodes[current_zero_indegree_node_index];
+        auto node_ordinal =
+            topological_order_of_nodes[current_zero_indegree_node_index];
 
         std::vector<int> successors = g.successors(node_ordinal);
         for (int index = 0; index < successors.size(); index++) {
-        	int nodeord = successors[index];
+            int nodeord = successors[index];
             int indegree = node_indegree[nodeord];
             indegree--;
             node_indegree[nodeord] = indegree;
             if (indegree == 0) {
-            	topological_order_of_nodes.push_back(nodeord);
+                topological_order_of_nodes.push_back(nodeord);
                 node_indegree.erase(nodeord);
             }
         }
