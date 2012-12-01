@@ -1,7 +1,7 @@
 #Makefile
 #please dont delete the two types of compiler, they are different for ubuntu and ming.
-CC=g++-4.7 -std=c++11
-#CC=g++
+#CC=g++-4.7 -std=c++11
+CC=g++
 TARGET=graph_test
 #TARGET=graph
 OBJDIR=objs

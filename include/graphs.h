@@ -38,30 +38,73 @@ namespace lib {
 
 		//returns ordinal(index) of the newly added node
 		int add_node(T &n) { return g.add_node(n); }
+		std::vector<int> add_nodes(std::vector<T> nodes_) { return g.add_nodes(nodes_); }
+		template<typename... Nodes>	std::vector<int> add_nodes(T n, Nodes... nodes_) {
+			return g.add_nodes(n, nodes_...);
+		}
 		
 		//retuns ordinal(index) of the newly added edge
-		int add_edge(int node1_ordinal, int node2_ordinal) { g.add_edge(node1_ordinal, node2_ordinal); }
+		int add_edge(int node1_ordinal, int node2_ordinal) { return g.add_edge(node1_ordinal, node2_ordinal); }
+		std::vector<int> add_edges(std::vector<std::pair<int, int>> edges_) { return g.add_edges(edges_); }
+		template<typename... Edges>	std::vector<int> add_edges(std::pair<int, int> e, Edges... edges_) {
+			return g.add_edges(e, edges_...);
+		}
 
 		int num_nodes() { return g.num_nodes(); }
 		int num_edges() { return g.num_edges(); }
 
 		void delete_node(int node_ordinal) { g.delete_node(node_ordinal); }
 		void delete_node_edges(int node_ordinal) { g.delete_node_edges(node_ordinal); }
+		void delete_nodes(std::vector<int> ns) { g.delete_nodes(ns); }
 
 		void delete_edge(int edge_ordinal) { g.delete_edge(edge_ordinal); }
+		void delete_edges(std::vector<int> edges) { delete_edges(edges); }
 
 		const T &get_node(int index) { return g.get_node(index); }
+		std::vector<const T&> get_nodes() { return g.get_nodes(); }
 
 		const std::pair<int, int>& get_edge(int index) { return g.get_edge(index); }
 
-		const std::vector<std::pair<std::string, std::string>>& get_node_attributes(int index) {
-			return g.get_node_attributes(index);
+		void add_node_attribute(int node_ordinal, std::string key, double value) {
+			g.add_node_attribute(node_ordinal, key, value);
 		}
-		
-		const std::vector<std::pair<std::string, std::string>>& get_edge_attributes(int index) {
-			return g.get_edge_attributes(index);
+		void add_node_attribute(int node_ordinal, std::string key, std::string value) {
+			g.add_node_attribute(node_ordinal, key, value);
+		}
+		double get_node_attribute(int node_ordinal, std::string key) {
+			return g.get_node_attribute(node_ordinal, key);
+		}
+		std::string get_node_string_attribute(int node_ordinal, std::string key) {
+			return g.get_node_string_attribute(node_ordinal, key);
+		}
+		std::vector<std::pair<std::string, double> > get_node_attributes(int node_ordinal) {
+			return g.get_node_attributes(node_ordinal);
+		}
+		std::vector<std::pair<std::string, std::string> > get_node_string_attributes(int node_ordinal) {
+			return g.get_node_string_attributes(node_ordinal);
 		}
 
+		void add_edge_attribute(int edge_ordinal, std::string key, double value) {
+			g.add_edge_attribute(edge_ordinal, key, value);
+		}
+		void add_edge_attribute(int edge_ordinal, std::string key, std::string value) {
+			g.add_edge_attribute(edge_ordinal, key, value);
+		}
+		double get_edge_attribute(int edge_ordinal, std::string key) {
+			return g.get_edge_attribute(edge_ordinal, key);
+		}
+		std::string get_edge_string_attribute(int edge_ordinal, std::string key) {
+			return g.get_edge_string_attribute(edge_ordinal, key);
+		}
+		std::vector<std::pair<std::string, double> > get_edge_attributes(int edge_ordinal) {
+			return g.get_edge_attributes(edge_ordinal);
+		}
+		std::vector<std::pair<std::string, std::string> > get_edge_string_attributes(int edge_ordinal) {
+			return g.get_edge_string_attributes(edge_ordinal);
+		}
+
+		void update_node(int node_ordinal, T n) { g.update_node(node_ordinal, n); }
+		
 		int get_node_index(const T& n) { return get_node_index(n); }
 
 		//move constructor should prevent performance issues
@@ -101,31 +144,74 @@ namespace lib {
 
 		//returns ordinal(index) of the newly added node
 		int add_node(T &n) { return g.add_node(n); }
+		std::vector<int> add_nodes(std::vector<T> nodes_) { return g.add_nodes(nodes_); }
+		template<typename... Nodes>	std::vector<int> add_nodes(T n, Nodes... nodes_) {
+			return g.add_nodes(n, nodes_...);
+		}
 		
 		//retuns ordinal(index) of the newly added edge
 		int add_edge(int node1_ordinal, int node2_ordinal) { g.add_edge(node1_ordinal, node2_ordinal); }
+		std::vector<int> add_edges(std::vector<std::pair<int, int>> edges_) { return g.add_edges(edges_); }
+		template<typename... Edges>	std::vector<int> add_edges(std::pair<int, int> e, Edges... edges_) {
+			return g.add_edges(e, edges_...);
+		}
 
 		int num_nodes() { return g.num_nodes(); }
 		int num_edges() { return g.num_edges(); }
 
-		void remove_node(int node_ordinal) { g.remove_node(node_ordinal); }
+		void delete_node(int node_ordinal) { g.delete_node(node_ordinal); }
+		void delete_nodes(std::vector<int> ns) { g.delete_nodes(ns); }
 		void delete_node_edges(int node_ordinal) { 
 			g.delete_node_edges(node_ordinal);
 		}
 
-		void remove_edge(int edge_ordinal) { g.remove_edge(edge_ordinal); }
+		void delete_edge(int edge_ordinal) { g.delete_edge(edge_ordinal); }
+		void delete_edges(std::vector<int> edges) { delete_edges(edges); }
 
 		const T &get_node(int index) { return g.get_node(index); }
+		std::vector<const T&> get_nodes() { return g.get_nodes(); }
 
 		const std::pair<int, int>& get_edge(int index) { return g.get_edge(index); }
 
-		const std::vector<std::pair<std::string, std::string>>& get_node_attributes(int index) {
-			return g.get_node_attributes(index);
+		void add_node_attribute(int node_ordinal, std::string key, double value) {
+			g.add_node_attribute(node_ordinal, key, value);
 		}
-		
-		const std::vector<std::pair<std::string, std::string>>& get_edge_attributes(int index) {
-			return g.get_edge_attributes(index);
+		void add_node_attribute(int node_ordinal, std::string key, std::string value) {
+			g.add_node_attribute(node_ordinal, key, value);
 		}
+		double get_node_attribute(int node_ordinal, std::string key) {
+			return g.get_node_attribute(node_ordinal, key);
+		}
+		std::string get_node_string_attribute(int node_ordinal, std::string key) {
+			return g.get_node_string_attribute(node_ordinal, key);
+		}
+		std::vector<std::pair<std::string, double> > get_node_attributes(int node_ordinal) {
+			return g.get_node_attributes(node_ordinal);
+		}
+		std::vector<std::pair<std::string, std::string> > get_node_string_attributes(int node_ordinal) {
+			return g.get_node_string_attributes(node_ordinal);
+		}
+
+		void add_edge_attribute(int edge_ordinal, std::string key, double value) {
+			g.add_edge_attribute(edge_ordinal, key, value);
+		}
+		void add_edge_attribute(int edge_ordinal, std::string key, std::string value) {
+			g.add_edge_attribute(edge_ordinal, key, value);
+		}
+		double get_edge_attribute(int edge_ordinal, std::string key) {
+			return g.get_edge_attribute(edge_ordinal, key);
+		}
+		std::string get_edge_string_attribute(int edge_ordinal, std::string key) {
+			return g.get_edge_string_attribute(edge_ordinal, key);
+		}
+		std::vector<std::pair<std::string, double> > get_edge_attributes(int edge_ordinal) {
+			return g.get_edge_attributes(edge_ordinal);
+		}
+		std::vector<std::pair<std::string, std::string> > get_edge_string_attributes(int edge_ordinal) {
+			return g.get_edge_string_attributes(edge_ordinal);
+		}
+
+		void update_node(int node_ordinal, T n) { g.update_node(node_ordinal, n); }
 
 		int get_node_index(const T& n) { return get_node_index(n); }
 

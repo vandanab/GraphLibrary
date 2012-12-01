@@ -209,9 +209,9 @@ namespace lib {
 		void delete_edge(int edge_ordinal);
 
 		//using vector
-		std::vector<int>& add_nodes(std::vector<T> nodes);
+		std::vector<int> add_nodes(std::vector<T> nodes);
 		
-		std::vector<int>& add_edges(std::vector<std::pair<int, int>> edges);
+		std::vector<int> add_edges(std::vector<std::pair<int, int>> edges);
 		
 		void delete_nodes(std::vector<int> ns) {
 			for(auto i = ns.begin(); i < ns.end(); i++) {
@@ -227,10 +227,10 @@ namespace lib {
 
 		//using variadic templates
 		template<typename... Nodes>
-		std::vector<int>& add_nodes(T n, Nodes... nodes);
+		std::vector<int> add_nodes(T n, Nodes... nodes);
 
 		template<typename... Edges>
-		std::vector<int>& add_edges(std::pair<int, int> e, Edges... edges);
+		std::vector<int> add_edges(std::pair<int, int> e, Edges... edges);
 
 		void update_node_edges(int node_ordinal, EdgeIterType it) {
 			(*nodes[node_ordinal]).update_edges(it);
@@ -270,10 +270,10 @@ namespace lib {
 		std::string get_node_string_attribute(int node_ordinal, std::string key) {
 			return (*nodes[node_ordinal]).get_attribute_service().get_string_attribute(key);
 		}
-		std::vector<std::pair<std::string, double> >& get_node_attributes(int node_ordinal) {
+		std::vector<std::pair<std::string, double> > get_node_attributes(int node_ordinal) {
 			return (*nodes[node_ordinal]).get_attribute_service().get_attributes();
 		}
-		std::vector<std::pair<std::string, std::string> >& get_node_string_attributes(int node_ordinal) {
+		std::vector<std::pair<std::string, std::string> > get_node_string_attributes(int node_ordinal) {
 			return (*nodes[node_ordinal]).get_attribute_service().get_string_attributes();
 		}
 
@@ -289,10 +289,10 @@ namespace lib {
 		std::string get_edge_string_attribute(int edge_ordinal, std::string key) {
 			return (*edges[edge_ordinal]).get_attribute_service().get_string_attribute(key);
 		}
-		std::vector<std::pair<std::string, double> >& get_edge_attributes(int edge_ordinal) {
+		std::vector<std::pair<std::string, double> > get_edge_attributes(int edge_ordinal) {
 			return (*edges[edge_ordinal]).get_attribute_service().get_attributes();
 		}
-		std::vector<std::pair<std::string, std::string> >& get_edge_string_attributes(int edge_ordinal) {
+		std::vector<std::pair<std::string, std::string> > get_edge_string_attributes(int edge_ordinal) {
 			return (*edges[edge_ordinal]).get_attribute_service().get_string_attributes();
 		}
 
@@ -321,7 +321,7 @@ namespace lib {
 
 	//we can experiment with batch add later
 	template<class T>
-	std::vector<int>& Graph<T>::add_nodes(std::vector<T> nodes_) {
+	std::vector<int> Graph<T>::add_nodes(std::vector<T> nodes_) {
 		std::vector<int> ordinals;
 		ordinals.reserve(nodes_.size());
 		for(int i = 0; i < nodes_.size(); i++) {
@@ -332,7 +332,7 @@ namespace lib {
 
 	template<class T>
 		template<typename... Nodes>
-		std::vector<int>& Graph<T>::add_nodes(T n, Nodes... nodes_) {
+		std::vector<int> Graph<T>::add_nodes(T n, Nodes... nodes_) {
 			std::vector<int> ordinals;
 			ordinals.reserve(sizeof...(nodes_)+1);
 			_add_nodes(n, nodes_..., ordinals);
@@ -423,7 +423,7 @@ namespace lib {
 	}
 
 	template<class T>
-	std::vector<int>& Graph<T>::add_edges(std::vector<std::pair<int, int>> edges_) {
+	std::vector<int> Graph<T>::add_edges(std::vector<std::pair<int, int>> edges_) {
 		std::vector<int> ordinals;
 		ordinals.reserve(edges_.size());
 		for(int i = 0; i < edges_.size(); i++) {
@@ -434,7 +434,7 @@ namespace lib {
 
 	template<class T>
 		template<typename... Edges>
-		std::vector<int>& Graph<T>::add_edges(std::pair<int, int> e, Edges... edges_) {
+		std::vector<int> Graph<T>::add_edges(std::pair<int, int> e, Edges... edges_) {
 			std::vector<int> ordinals;
 			ordinals.reserve(sizeof...(edges_)+1);
 			_add_edges(e, edges_..., ordinals);
