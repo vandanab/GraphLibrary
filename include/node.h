@@ -5,10 +5,10 @@
  */
 #include<list>
 #include<string>
-#include<utility>
 #include<vector>
 #include<iostream>
 #include "edge.h"
+#include "attribute_service.h"
 
 // ref: http://stackoverflow.com/questions/6807369/undefined-reference-to-constructor-generic-class?rq=1
 
@@ -20,12 +20,9 @@ namespace lib {
 	class Node {
 		int ordinal;
 		T val;
-		// for now the attributes are assumed to be string key-value pairs
-		std::vector<std::pair<std::string, std::string> > attributes;
-		//vector<list<Edge<T> >::iterator> my_edges;
+		AttributeService attribute_service;
 		std::vector<int> in_edges;
 		std::vector<int> out_edges;
-
 	public:
 		Node() = default;
 
@@ -37,7 +34,7 @@ namespace lib {
 		Node<T>& operator=(Node<T> const&) = default;
 
 		//actual value constructor
-		Node(const T &n, int ord) : attributes(0), in_edges(0), out_edges(0), val(n), ordinal(ord) {}
+		Node(const T &n, int ord) : attribute_service(), in_edges(0), out_edges(0), val(n), ordinal(ord) {}
 	
 		~Node() = default;
 		//void update_edges(list<Edge<T> >::iterator it);
@@ -65,6 +62,10 @@ namespace lib {
 			}
 		}
 
+		AttributeService& get_attribute_service() {
+			return attribute_service;
+		}
+
 		std::vector<int> get_in_edges() { return in_edges; }
 
 		std::vector<int> get_out_edges() { return out_edges; }
@@ -73,25 +74,6 @@ namespace lib {
 
 		bool operator==(const Node &other) const;
 
-		// returns the index of the newly added attribute
-		int add_attribute(std::pair<std::string, std::string> attribute);
-
-		std::pair<std::string, std::string> get_attribute(int index);
-
-		std::pair<std::string, std::string> get_attribute(std::string key);
-
-		std::string get_attribute_value(std::string key);
-
-		std::vector<std::pair<std::string, std::string>>& get_attributes();
-
-		//std::vector<int> neighbors_undirected();
-		//std::vector<int> neighbors_directed();
-
-		//all nodes it is connected to or which connect to it
-
-		//std::vector<int> get_edges_undirected();
-		//std::vector<int> get_edges_directed();
-		
 		int get_ordinal() { return ordinal; }
 
 		void print();
@@ -101,7 +83,7 @@ namespace lib {
 	template<class T>
 	//this constructor should not be allowed
 	//basically a node without a value is useless
-	Node<T>::Node() : attributes(0), my_edges(0){
+	Node<T>::Node() : attributes(0), in_edges(0), out_edges(0){
 	}
 
 	template<class T>
@@ -123,38 +105,6 @@ namespace lib {
 		return val == other.val && ordinal == other.ordinal;
 	}
 
-	// returns the index of the newly added attribute
-	template<class T>
-	int Node<T>::add_attribute(std::pair<std::string, std::string> attribute) {
-		attributes.push_back(attribute);
-		return attributes.size() - 1;
-	}
-
-	template<class T>
-	std::vector<std::pair<std::string, std::string>>& Node<T>::get_attributes() {
-		return attributes;
-	}
-
-	template<class T>
-	std::pair<std::string, std::string> Node<T>::get_attribute(int index) {
-		return attributes[index];
-	}
-
-	template<class T>
-	std::pair<std::string, std::string> Node<T>::get_attribute(std::string key) {
-		std::vector<std::pair<std::string, std::string> >::iterator i;
-		for(i = attributes.begin(); i < attributes.end(); i++) {
-			if((*i).first == key)
-				return *i;
-		}
-	}
-
-	template<class T>
-	std::string Node<T>::get_attribute_value(std::string key) {
-		std::pair<std::string, std::string> attrib = get_attribute(key);
-		return attrib.second;
-	}
-
 	template<class T>
 	void Node<T>::print() {
 		//we have to find a way to print edges now.
@@ -170,31 +120,5 @@ namespace lib {
 		std::cout << std::endl;
 	}
 
-	/*
-	template<class T>
-	std::vector<int> Node<T>::neighbors_directed() {
-		return successors();
-	}*/
-
-	/*
-	template<class T>
-	std::vector<int> Node<T>::get_edges_undirected() {
-		long size = inEdges.size() + outEdges.size();
-		std::vector<int> v(size);
-		for (long i = 0; i < inEdges.size(); i++)
-		{
-			v.push_back((*inEdges[i]).get_ordinal());
-		}
-		for (long i = outEdges.size(); i < size; i++)
-		{
-			v.push_back((*outEdges[i]).get_ordinal());
-		}
-		return v;
-	}
-
-	template<class T>
-	std::vector<int> Node<T>::get_edges_directed() {
-		return out_edges();
-	}*/
 }
 #endif

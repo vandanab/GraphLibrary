@@ -7,6 +7,7 @@
 #include<iterator>
 #include<list>
 #include<vector>
+#include<utility>
 #include "edge.h"
 #include "exceptions.h"
 #include "node.h"
@@ -48,6 +49,7 @@ namespace lib {
 
 	public:
 		//define copy, move and default constructors
+		//TODO:change it to default or define properly
 		Graph() {}
 
 		//move constructor
@@ -244,17 +246,6 @@ namespace lib {
 
 		const std::pair<int, int>& get_edge(int edge_ordinal);
 
-		//for graph types
-		/*
-		std::vector<int> neighbors_undirected(int node_ordinal) {
-			return (*nodes[node_ordinal]).neighbors_undirected(); 
-		}
-		std::vector<int> neighbors_directed(int node_ordinal) {
-			return (*nodes[node_ordinal]).neighbors_directed(); 
-		}
-		std::vector<int> successors(int node_ordinal) { return (*nodes[node_ordinal]).successors(); }
-		std::vector<int> predecessors(int node_ordinal) {  return (*nodes[node_ordinal]).predecessors(); }*/
-
 		std::vector<int> get_edges_undirected(int node_ordinal) { 
 			std::vector<int> edges_ = (*nodes[node_ordinal]).get_in_edges();
 			std::vector<int> edgeso_ = (*nodes[node_ordinal]).get_out_edges();
@@ -267,9 +258,43 @@ namespace lib {
 		std::vector<int> in_edges(int node_ordinal) { return (*nodes[node_ordinal]).in_edges(); }
 		std::vector<int> out_edges(int node_ordinal) { return (*nodes[node_ordinal]).out_edges(); }
 
-		const std::vector<std::pair<std::string, std::string>>& get_node_attributes(int index);
-		
-		const std::vector<std::pair<std::string, std::string>>& get_edge_attributes(int index);
+		void add_node_attribute(int node_ordinal, std::string key, double value) {
+			(*nodes[node_ordinal]).get_attribute_service().add_attribute(key, value);
+		}
+		void add_node_attribute(int node_ordinal, std::string key, std::string value) {
+			(*nodes[node_ordinal]).get_attribute_service().add_attribute(key, value);
+		}
+		double get_node_attribute(int node_ordinal, std::string key) {
+			return (*nodes[node_ordinal]).get_attribute_service().get_attribute(key);
+		}
+		std::string get_node_string_attribute(int node_ordinal, std::string key) {
+			return (*nodes[node_ordinal]).get_attribute_service().get_string_attribute(key);
+		}
+		std::vector<std::pair<std::string, double> >& get_node_attributes(int node_ordinal) {
+			return (*nodes[node_ordinal]).get_attribute_service().get_attributes();
+		}
+		std::vector<std::pair<std::string, std::string> >& get_node_string_attributes(int node_ordinal) {
+			return (*nodes[node_ordinal]).get_attribute_service().get_string_attributes();
+		}
+
+		void add_edge_attribute(int edge_ordinal, std::string key, double value) {
+			(*edges[edge_ordinal]).get_attribute_service().add_attribute(key, value);
+		}
+		void add_edge_attribute(int edge_ordinal, std::string key, std::string value) {
+			(*edges[edge_ordinal]).get_attribute_service().add_attribute(key, value);
+		}
+		double get_edge_attribute(int edge_ordinal, std::string key) {
+			return (*edges[edge_ordinal]).get_attribute_service().get_attribute(key);
+		}
+		std::string get_edge_string_attribute(int edge_ordinal, std::string key) {
+			return (*edges[edge_ordinal]).get_attribute_service().get_string_attribute(key);
+		}
+		std::vector<std::pair<std::string, double> >& get_edge_attributes(int edge_ordinal) {
+			return (*edges[edge_ordinal]).get_attribute_service().get_attributes();
+		}
+		std::vector<std::pair<std::string, std::string> >& get_edge_string_attributes(int edge_ordinal) {
+			return (*edges[edge_ordinal]).get_attribute_service().get_string_attributes();
+		}
 
 		void update_node(int node_ordinal, T n) {
 			(*nodes[node_ordinal]).update_node(n);
@@ -451,22 +476,8 @@ namespace lib {
 	}
 
 	template<class T>
-	const std::vector<std::pair<std::string, std::string>>& Graph<T>::get_node_attributes(int node_ordinal) {
-		if(nodes[node_ordinal] == node_list.end())
-			throw InvalidAccessException("Node does not exist");
-		return const_cast<std::vector<std::pair<std::string, std::string>>>((*nodes[node_ordinal]).get_attributes());
-	}
-
-	template<class T>
 	const std::pair<int, int>& Graph<T>::get_edge(int index) {
 		return const_cast<std::pair<int, int>&>((*edges[index]).get_edge());
-	}
-
-	template<class T>
-	const std::vector<std::pair<std::string, std::string>>& Graph<T>::get_edge_attributes(int index) {
-		if(edges[index] == edge_list.end())
-			throw InvalidAccessException("Edge does not exist");
-		return const_cast<std::vector<std::pair<std::string, std::string>>>((*edges[index]).get_attributes());
 	}
 
 	// how to report error if not found?

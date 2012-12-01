@@ -6,6 +6,7 @@
 #include<list>
 #include<vector>
 #include<utility>
+#include "attribute_service.h"
 #ifndef EDGE_H
 #define EDGE_H
 
@@ -17,7 +18,7 @@ namespace lib {
 		int ordinal;
 		int node1_ord;
 		int node2_ord;
-		std::vector<std::pair<std::string, std::string> > attributes;
+		AttributeService attribute_service;
 	public:
 		Edge() = default;
 		Edge(const Edge &e) = default;
@@ -32,20 +33,12 @@ namespace lib {
 
 		int get_ordinal() { return ordinal; }
 
-		//update attributes
-		// returns the index of the newly added attribute
-		int add_attribute(std::pair<std::string, std::string> attribute);
-
-		std::pair<std::string, std::string> get_attribute(int index);
-
-		std::pair<std::string, std::string> get_attribute(std::string key);
-
-		std::string get_attribute_value(std::string key);
-
-		std::vector<std::pair<std::string, std::string>>& get_attributes();
+		AttributeService& get_attribute_service() {
+			return attribute_service;
+		}
 
 		std::pair<int, int>& get_edge() {
-			//get rid of this naked new
+			//TODO:get rid of this naked new
 			std::pair<int, int> *e = new std::pair<int, int>(node1_ord, node2_ord);
 			return *e;
 		}
