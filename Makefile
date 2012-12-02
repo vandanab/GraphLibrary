@@ -1,11 +1,11 @@
 #Makefile
 #please dont delete the two types of compiler, they are different for ubuntu and ming.
-#CC=g++-4.7 -std=c++11
-CC=g++
+CC=g++-4.7 -std=c++11
+#CC=g++
 TARGET=graph_test
 #TARGET=graph
 OBJDIR=objs
-OBJS=$(addprefix $(OBJDIR)/,graph.o graphs.o edge.o node.o unit_test.o path.o topologicalsort.o depthfirsttraversal.o breadthfirsttraversal.o attribute_service.o bipartite.o)
+OBJS=$(addprefix $(OBJDIR)/,graph.o graphs.o edge.o node.o unit_test.o path.o topologicalsort.o depthfirsttraversal.o breadthfirsttraversal.o attribute_service.o bipartite.o min_spanning_tree.o)
 SRCDIR=src
 TESTDIR=test
 INCDIR=include
@@ -47,6 +47,9 @@ $(OBJDIR)/path.o: $(SRCDIR)/path.cpp
 	$(CC) -g -I$(INCDIR) -c -o $@ $^
 
 $(OBJDIR)/bipartite.o: $(SRCDIR)/bipartite.cpp
+	$(CC) -g -I$(INCDIR) -c -o $@ $^
+
+$(OBJDIR)/min_spanning_tree.o: $(SRCDIR)/min_spanning_tree.cpp
 	$(CC) -g -I$(INCDIR) -c -o $@ $^
 
 $(OBJDIR)/graph.o: $(SRCDIR)/graph.cpp
