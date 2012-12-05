@@ -1,6 +1,6 @@
 /**
  * graphs.h provides the interface for the basic graph types
- * @author GraphLib Team (?)
+ * @author GraphLib Team
  * @version 0.1 11/23/2012
  */
 

@@ -1,6 +1,6 @@
 /**
  * attribute_service.h
- * @author: GraphLib Team(?)
+ * @author: GraphLib Team
  * AttributeService class which saves attributes for nodes and edges of the graph. Can be made more sophisticated.
  * It makes sense to have a service associated with data structures requiring common functionality which provides that functionality(like an iterator).
  */

@@ -1,16 +1,22 @@
 /**
  * graph.h
- * @author: GraphLib Team (?)
+ * @author: GraphLib Team
  * Graph class which provides the interface for the basic structures
  * of a graph.
  */
 #include<iterator>
 #include<list>
 #include<vector>
+#include<string>
 #include<utility>
+#include<cstdio>
+#include<cstdlib>
+#include<cstring>
+#include<fstream>
 #include "edge.h"
 #include "exceptions.h"
 #include "node.h"
+#include "utils.h"
 
 #ifndef GRAPH_H
 #define GRAPH_H
@@ -255,8 +261,8 @@ namespace lib {
 		std::vector<int> get_edges_directed(int node_ordinal) { 
 			return (*nodes[node_ordinal]).get_out_edges();
 		}
-		std::vector<int> in_edges(int node_ordinal) { return (*nodes[node_ordinal]).in_edges(); }
-		std::vector<int> out_edges(int node_ordinal) { return (*nodes[node_ordinal]).out_edges(); }
+		std::vector<int> in_edges(int node_ordinal) { return (*nodes[node_ordinal]).get_in_edges(); }
+		std::vector<int> out_edges(int node_ordinal) { return (*nodes[node_ordinal]).get_out_edges(); }
 
 		void add_node_attribute(int node_ordinal, std::string key, double value) {
 			(*nodes[node_ordinal]).get_attribute_service().add_attribute(key, value);
@@ -307,6 +313,8 @@ namespace lib {
 		//currently for debugging purposes
 		//implement >>ostream operator instead
 		void print();
+
+		void export_as_gml(std::string filename);
 	};
 
 	template<class T>
@@ -506,5 +514,9 @@ namespace lib {
 		}
 	}
 
+	template<class T>
+	void Graph<T>::export_as_gml(std::string filename) {
+		export_to_gml(this, filename);
+	}
 }
 #endif

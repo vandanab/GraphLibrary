@@ -1,6 +1,6 @@
 /**
  * node.h
- * @author: GraphLib Team (?)
+ * @author: GraphLib Team
  * Node class representing the nodes of the graph structure.
  */
 #include<list>

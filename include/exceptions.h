@@ -1,6 +1,6 @@
 /**
  * exceptions.h
- * @author: GraphLib Team (?)
+ * @author: GraphLib Team
  * Contains the exception classes used by the Graph Library.
  */
 #include<exception>

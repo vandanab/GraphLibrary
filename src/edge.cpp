@@ -1,6 +1,6 @@
 /**
  * edge.cpp
- * @author: GraphLib Team(?)
+ * @author: GraphLib Team
  * Edge implementation. Possible because edge is not templatized.
  */
 #include<iostream>

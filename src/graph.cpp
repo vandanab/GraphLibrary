@@ -1,6 +1,6 @@
 /**
  * graph.cpp
- * @author: GraphLib Team(?)
+ * @author: GraphLib Team
  * Implementation of the graph interface.
  */
 #include<iostream>

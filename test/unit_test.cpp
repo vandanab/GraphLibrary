@@ -1,6 +1,6 @@
 /**
  * Unit Test for GraphLib
- * @author GraphLib Team (?)
+ * @author GraphLib Team
  * @version 0.1 11/21/2012
 */
 
@@ -9,6 +9,7 @@
 #include "topologicalsort.h"
 #include "depthfirsttraversal.h"
 #include "breadthfirsttraversal.h"
+#include "utils.h"
 
 void test_topological_sort() {
 	std::cout<<"Testing topological sort\n";
@@ -179,6 +180,15 @@ void test_attributes() {
 
 }
 
+void test_graph_import_export()
+{
+	lib::Graph<int> g1 = lib::import_gml("input_graph.gml");
+
+	std::cout << "imported graph :: no. of nodes: " << g1.num_nodes() << " no. of edges: " << g1.num_edges();
+
+	g1.export_as_gml("output_graph.gml");
+}
+
 int main()
 {
 	//en.wikipedia.org/wiki/Graph_theory
@@ -205,7 +215,8 @@ int main()
 
 	std::cout << "no. of nodes: " << g1.num_nodes() << " no. of edges: " << g1.num_edges() << std::endl;
 	g1.print();
-
+	g1.export_as_gml("graph.gml");
+	
 	g1.delete_node(n1[4]);
 	g1.delete_edge(e1[2]);
 
@@ -225,6 +236,7 @@ int main()
 	test_dft_undigraph();
 	test_bft_digraph();
 	test_bft_undigraph();
+	test_graph_import_export();
 
 	return 0;
 }

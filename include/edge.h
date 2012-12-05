@@ -1,6 +1,6 @@
 /**
  * edge.h
- * @author: GraphLib Team (?)
+ * @author: GraphLib Team
  * Edge class representing the edges in the graph structure.
  */
 #include<list>
