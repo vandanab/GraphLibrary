@@ -1,12 +1,11 @@
 #Makefile
 #please dont delete the two types of compiler, they are different for ubuntu and ming.
-CC=gcc
 #CXX=g++-4.7 -std=c++11
 CXX=g++
 TARGET=graph_test
 #TARGET=graph
 OBJDIR=objs
-OBJS=$(addprefix $(OBJDIR)/,graph.o graphs.o edge.o node.o unit_test.o path.o topologicalsort.o depthfirsttraversal.o breadthfirsttraversal.o attribute_service.o bipartite.o utils.o)
+OBJS=$(addprefix $(OBJDIR)/,graph.o graphs.o edge.o node.o unit_test.o path.o topologicalsort.o depthfirsttraversal.o breadthfirsttraversal.o attribute_service.o bipartite.o min_spanning_tree.o utils.o)
 GMLPARSER_DIR=../gml-parser
 GMLPARSER_OBJS=$(addprefix $(GMLPARSER_DIR)/,gml_parser.o gml_scanner.o)
 SRCDIR=src
@@ -24,7 +23,7 @@ $(OBJDIR):
 	mkdir $(OBJDIR)
 
 $(GMLPARSER_DIR)/gml_scanner.o: $(GMLPARSER_DIR)/gml_scanner.c
-	$(CXX) -g -I$(GMLINCDIR) -c -o $@ $^
+	$(CXX) -g -Wno-write-strings -I$(GMLINCDIR) -c -o $@ $^
 
 $(GMLPARSER_DIR)/gml_parser.o: $(GMLPARSER_DIR)/gml_parser.c
 	$(CXX) -g -I$(GMLINCDIR) -c -o $@ $^
@@ -61,6 +60,9 @@ $(OBJDIR)/bipartite.o: $(SRCDIR)/bipartite.cpp
 
 $(OBJDIR)/utils.o: $(SRCDIR)/utils.cpp
 	$(CXX) -g -I$(INCDIR) -I$(GMLINCDIR) -c -o $@ $^
+
+$(OBJDIR)/min_spanning_tree.o: $(SRCDIR)/min_spanning_tree.cpp
+	$(CC) -g -I$(INCDIR) -c -o $@ $^
 
 $(OBJDIR)/graph.o: $(SRCDIR)/graph.cpp
 	$(CXX) -g -I$(INCDIR) -I$(GMLINCDIR) -c -o $@ $^

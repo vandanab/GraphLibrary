@@ -109,6 +109,9 @@ namespace lib {
 
 		//move constructor should prevent performance issues
 		std::vector<int> neighbors(int node_ordinal) { return g.neighbors(node_ordinal); }
+		std::vector<std::pair<int, int> > neighbors_with_edges(int node_ordinal) {
+			return g.neighbors_with_edges(node_ordinal);
+		}
 
 		std::vector<int> get_edges(int node_ordinal) { return g.get_edges_undirected(node_ordinal); }
 
@@ -217,7 +220,13 @@ namespace lib {
 
 		//move constructor should prevent performance issues
 		std::vector<int> neighbors(int node_ordinal) { return g.successors(node_ordinal); }
+		std::vector<std::pair<int, int> > neighbors_with_edges(int node_ordinal) {
+			return g.successors_with_edges(node_ordinal);
+		}
 		std::vector<int> successors(int node_ordinal) { return g.successors(node_ordinal); }
+		std::vector<std::pair<int, int> > successors_with_edges(int node_ordinal) {
+			return g.successors_with_edges(node_ordinal);
+		}
 		std::vector<int> predecessors(int node_ordinal) { return g.predecessors(node_ordinal); }
 
 		std::vector<int> get_edges(int node_ordinal) { return g.get_edges_directed(node_ordinal); }

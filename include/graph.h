@@ -247,7 +247,9 @@ namespace lib {
 		std::vector<const T&> get_nodes();
 		
 		std::vector<int> neighbors(int node_ordinal);
+		std::vector<std::pair<int, int> > neighbors_with_edges(int node_ordinal);
 		std::vector<int> successors(int node_ordinal);
+		std::vector<std::pair<int, int> > successors_with_edges(int node_ordinal);
 		std::vector<int> predecessors(int node_ordinal);
 
 		const std::pair<int, int>& get_edge(int edge_ordinal);
@@ -392,6 +394,26 @@ namespace lib {
 		}
 		return v;
 	}
+	
+	template<class T>
+	std::vector<std::pair<int, int> > Graph<T>::neighbors_with_edges(int node_ordinal) {
+		if(nodes[node_ordinal] == node_list.end())
+			throw InvalidAccessException("Node does not exist");
+		auto in_edges = (*nodes[node_ordinal]).get_in_edges();
+		auto out_edges = (*nodes[node_ordinal]).get_out_edges();
+		auto size = in_edges.size() + out_edges.size();
+		std::vector<std::pair<int, int> > v;
+		v.reserve(size);
+		for (int i = 0; i < in_edges.size(); i++)
+		{
+			v.push_back(std::make_pair((*(edges[in_edges[i]])).get_source_node(), in_edges[i]));
+		}
+		for (int i = 0; i < out_edges.size(); i++)
+		{
+			v.push_back(std::make_pair((*(edges[out_edges[i]])).get_destn_node(), out_edges[i]));
+		}
+		return v;
+	}
 
 	template<class T>
 	std::vector<int> Graph<T>::successors(int node_ordinal) {
@@ -402,6 +424,18 @@ namespace lib {
 		v.reserve(out_edges.size());
 		for (int i = 0; i < out_edges.size(); i++)
 			v.push_back((*(edges[out_edges[i]])).get_destn_node());
+		return v;
+	}
+
+	template<class T>
+	std::vector<std::pair<int, int> > Graph<T>::successors_with_edges(int node_ordinal) {
+		if(nodes[node_ordinal] == node_list.end())
+			throw InvalidAccessException("Node does not exist");
+		auto out_edges = (*nodes[node_ordinal]).get_out_edges();
+		std::vector<std::pair<int, int> > v;
+		v.reserve(out_edges.size());
+		for (int i = 0; i < out_edges.size(); i++)
+			v.push_back(std::make_pair((*(edges[out_edges[i]])).get_destn_node(), out_edges[i]));
 		return v;
 	}
 
