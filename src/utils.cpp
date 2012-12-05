@@ -1,13 +1,16 @@
 /**
 * utility functions like imprt export
 */
-
+#include <unordered_map>
+#include <utility>
 #include "utils.h"
 #include "gml_parser.h"
 
 namespace lib {
 	Graph<int> import_gml(std::string filename) {
 		lib::Graph<int> g;
+		std::unordered_map<long, int> id_ordinal_map;
+
 		FILE* file = fopen (filename.c_str(), "r");
 		if (!file)
 			printf ("\n No such file: %s", filename.c_str());
@@ -31,7 +34,9 @@ namespace lib {
 								while (list2) {
 									//printf("%s\n", list2->key);
 									if(!strcmp(list2->key, "id")) {
-										g.add_node(list2->value.integer);
+										int node_ordinal = g.add_node((int)list2->value.integer);
+										std::pair<long, int> entry (list2->value.integer,node_ordinal);
+										id_ordinal_map.insert(entry);
 									}
 									list2 = list2->next;
 								}
@@ -42,16 +47,16 @@ namespace lib {
 								while (list2) {
 									//printf("%s\n", list2->key);
 									if (!strcmp(list2->key, "source")) {
-										src_node = list2->value.integer;
+										src_node = id_ordinal_map[list2->value.integer];
 										//printf("%d\n", list2->value.integer);
 									} else if (!strcmp(list2->key, "target")) {
-										dest_node = list2->value.integer;
+										dest_node = id_ordinal_map[list2->value.integer];
 										//printf("%d\n", list2->value.integer);
 									}
 									list2 = list2->next;
 								}
 								if (src_node > 0 && dest_node > 0) {
-									g.add_edge((src_node-1), (dest_node-1));
+									g.add_edge(src_node, dest_node);
 								}
 							}
 							list1 = list1->next;
