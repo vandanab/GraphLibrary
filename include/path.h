@@ -24,7 +24,9 @@ namespace lib
 	template <class T>
 	std::vector<int> get_shortest_path(Graph<T> g, int node_source, int node_target);
 
-
+	
+	template <class T>
+	std::vector<Graph<T> > get_connected_components(Graph<T> g);
 }
 
 #endif
