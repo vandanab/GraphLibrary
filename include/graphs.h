@@ -45,7 +45,7 @@ namespace lib {
 		
 		//retuns ordinal(index) of the newly added edge
 		int add_edge(int node1_ordinal, int node2_ordinal) { return g.add_edge(node1_ordinal, node2_ordinal); }
-		std::vector<int> add_edges(std::vector<std::pair<int, int>> edges_) { return g.add_edges(edges_); }
+		std::vector<int> add_edges(std::vector<std::pair<int, int> > edges_) { return g.add_edges(edges_); }
 		template<typename... Edges>	std::vector<int> add_edges(std::pair<int, int> e, Edges... edges_) {
 			return g.add_edges(e, edges_...);
 		}
@@ -154,7 +154,7 @@ namespace lib {
 		
 		//retuns ordinal(index) of the newly added edge
 		int add_edge(int node1_ordinal, int node2_ordinal) { g.add_edge(node1_ordinal, node2_ordinal); }
-		std::vector<int> add_edges(std::vector<std::pair<int, int>> edges_) { return g.add_edges(edges_); }
+		std::vector<int> add_edges(std::vector<std::pair<int, int> > edges_) { return g.add_edges(edges_); }
 		template<typename... Edges>	std::vector<int> add_edges(std::pair<int, int> e, Edges... edges_) {
 			return g.add_edges(e, edges_...);
 		}

@@ -2,23 +2,29 @@
 #please dont delete the two types of compiler, they are different for ubuntu and ming.
 CXX=g++-4.7 -std=c++11
 #CXX=g++
-TARGET=graph_test
+#TARGET=graph_test
+TARGET=perf
 #TARGET=graph
 OBJDIR=objs
-OBJS=$(addprefix $(OBJDIR)/,graph.o graphs.o edge.o node.o unit_test.o path.o topologicalsort.o depthfirsttraversal.o breadthfirsttraversal.o attribute_service.o bipartite.o min_spanning_tree.o utils.o)
-GMLPARSER_DIR=../gml-parser
+OBJS=$(addprefix $(OBJDIR)/,graph.o graphs.o edge.o node.o unit_test.o path.o topologicalsort.o depthfirsttraversal.o breadthfirsttraversal.o attribute_service.o bipartite.o min_spanning_tree.o utils.o perf.o)
+GMLPARSER_DIR=../../gml-parser
 GMLPARSER_OBJS=$(addprefix $(GMLPARSER_DIR)/,gml_parser.o gml_scanner.o)
-SRCDIR=src
-TESTDIR=test
-INCDIR=include
-GMLINCDIR=../gml-parser
+SRCDIR=../src
+TESTDIR=../test
+INCDIR=../include
+GMLINCDIR=../../gml-parser
+BOOSTINCDIR=../../boost_1_52_0
+BOOSTLIBPATH=../../boost_1_52_0/stage/lib
 
 VPATH=./src;./test
 
 ## Default rule executed
 
+#$(TARGET): $(OBJDIR) | $(GMLPARSER_OBJS) $(OBJS)
+#	$(CXX) -g -o $(TARGET) $(GMLPARSER_OBJS) $(OBJS)
+
 $(TARGET): $(OBJDIR) | $(GMLPARSER_OBJS) $(OBJS)
-	$(CXX) -g -o $(TARGET) $(GMLPARSER_OBJS) $(OBJS)
+	$(CXX) -g -o $(TARGET) $(GMLPARSER_OBJS) $(OBJS) -L$(BOOSTLIBPATH) -lboost_graph -lboost_regex
 
 $(OBJDIR):
 	mkdir $(OBJDIR)
@@ -37,6 +43,9 @@ $(OBJDIR)/node.o: $(SRCDIR)/node.cpp
 
 $(OBJDIR)/unit_test.o: $(TESTDIR)/unit_test.cpp
 	$(CXX) -g -I$(INCDIR) -I$(GMLINCDIR) -c -o $@ $^
+
+$(OBJDIR)/perf.o: $(TESTDIR)/perf.cpp
+	$(CXX) -g -I$(INCDIR) -I$(GMLINCDIR) -I$(BOOSTINCDIR) -c -o $@ $^
 
 $(OBJDIR)/graphs.o: $(SRCDIR)/graphs.cpp
 	$(CXX) -g -I$(INCDIR) -I$(GMLINCDIR) -c -o $@ $^
