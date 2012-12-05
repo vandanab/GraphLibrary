@@ -10,6 +10,7 @@
 #include "depthfirsttraversal.h"
 #include "breadthfirsttraversal.h"
 #include "min_spanning_tree.h"
+#include "bipartite.h"
 
 void test_topological_sort() {
 	std::cout<<"Testing topological sort\n";
@@ -151,6 +152,87 @@ void test_bft_undigraph() {
 				}
 }
 
+void test_bipartite_digraph() {
+	std::cout << "testing bipartite on directed graph\n";
+	lib::DirectedGraph<int> g1;
+			int n1[6];	//node_ordinals
+			int e1[7];	//edge_ordinals
+
+			int a = 1, b = 2, c = 3, d = 4, e = 5,  f = 6;
+
+			n1[0] = g1.add_node(a);
+			n1[1] = g1.add_node(b);
+			n1[2] = g1.add_node(c);
+			n1[3] = g1.add_node(d);
+			n1[4] = g1.add_node(e);
+			n1[5] = g1.add_node(f);
+
+			e1[0] = g1.add_edge(n1[0], n1[1]);
+			e1[1] = g1.add_edge(n1[0], n1[3]);
+			e1[2] = g1.add_edge(n1[4], n1[5]);
+			e1[3] = g1.add_edge(n1[2], n1[5]);
+			e1[4] = g1.add_edge(n1[2], n1[3]);
+			e1[5] = g1.add_edge(n1[2], n1[5]);
+
+			std::map<int, int> nodemap = lib::is_bipartite(g1);
+			for (auto it=nodemap.begin() ; it != nodemap.end(); it++ )
+			    std::cout << (*it).first << " => " << (*it).second << std::endl;
+}
+
+void test_bipartite_undigraph() {
+	std::cout << "testing bipartite on undirected graph\n";
+	lib::UndirectedGraph<int> g1;
+			int n1[6];	//node_ordinals
+			int e1[7];	//edge_ordinals
+
+			int a = 1, b = 2, c = 3, d = 4, e = 5,  f = 6;
+
+			n1[0] = g1.add_node(a);
+			n1[1] = g1.add_node(b);
+			n1[2] = g1.add_node(c);
+			n1[3] = g1.add_node(d);
+			n1[4] = g1.add_node(e);
+			n1[5] = g1.add_node(f);
+
+			e1[0] = g1.add_edge(n1[0], n1[1]);
+			e1[1] = g1.add_edge(n1[0], n1[3]);
+			e1[2] = g1.add_edge(n1[4], n1[5]);
+			e1[3] = g1.add_edge(n1[2], n1[5]);
+			e1[4] = g1.add_edge(n1[2], n1[3]);
+			e1[5] = g1.add_edge(n1[2], n1[5]);
+
+			std::map<int, int> nodemap = lib::is_bipartite(g1);
+			for (auto it=nodemap.begin() ; it != nodemap.end(); it++ )
+				std::cout << (*it).first << " => " << (*it).second << std::endl;
+}
+
+void test_notbipartite_undigraph() {
+	std::cout <<"Testing undirected graph bipartite\n";
+	lib::UndirectedGraph<int> g1;
+			int n1[6];	//node_ordinals
+			int e1[7];	//edge_ordinals
+
+			int a = 1, b = 2, c = 3, d = 4, e = 5,  f = 6;
+
+			n1[0] = g1.add_node(a);
+			n1[1] = g1.add_node(b);
+			n1[2] = g1.add_node(c);
+			n1[3] = g1.add_node(d);
+			n1[4] = g1.add_node(e);
+			n1[5] = g1.add_node(f);
+
+			e1[0] = g1.add_edge(n1[0], n1[1]);
+			e1[1] = g1.add_edge(n1[0], n1[4]);
+			e1[2] = g1.add_edge(n1[1], n1[2]);
+			e1[3] = g1.add_edge(n1[1], n1[4]);
+			e1[4] = g1.add_edge(n1[2], n1[3]);
+			e1[5] = g1.add_edge(n1[3], n1[4]);
+
+			std::map<int, int> nodemap = lib::is_bipartite(g1);
+				for (auto it=nodemap.begin() ; it != nodemap.end(); it++ )
+					std::cout << (*it).first << " => " << (*it).second << std::endl;
+}
+
 void test_attributes() {
 	lib::Graph<int> g1;
 	int n1[6];	//node_ordinals
@@ -260,7 +342,9 @@ int main()
 	test_dft_undigraph();
 	test_bft_digraph();
 	test_bft_undigraph();
-	test_min_spanning_tree();
-
+	test_bipartite_digraph();
+	test_bipartite_undigraph();
+	test_notbipartite_undigraph();
+        test_min_spanning_tree();
 	return 0;
 }
