@@ -24,7 +24,7 @@ namespace lib {
 		//todo: add directed/undirected
 		for (auto n_it = g->nodes_begin(); n_it != g->nodes_end(); n_it++) {
 			os << "node [" << std::endl;
-			os << "id " << (*n_it) << std::endl;
+			os << "id " << ((*n_it) + 1) << std::endl;
 			os << "label " << "\"" << ((*n_it) + 1) << "\"" << std::endl;
 			os << "]" << std::endl;
 		}
