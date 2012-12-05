@@ -265,7 +265,7 @@ void test_attributes() {
 
 void test_graph_import_export()
 {
-	lib::Graph<int> g1 = lib::import_gml("graph.gml");
+	lib::Graph<int> g1 = lib::import_gml("input_graph.gml");
 
 	std::cout << "imported graph :: no. of nodes: " << g1.num_nodes() << " no. of edges: " << g1.num_edges();
 
@@ -358,5 +358,6 @@ int main()
 	test_notbipartite_undigraph();
     test_min_spanning_tree();
 	test_graph_import_export();
+
 	return 0;
 }

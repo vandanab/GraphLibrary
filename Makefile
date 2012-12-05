@@ -62,7 +62,7 @@ $(OBJDIR)/utils.o: $(SRCDIR)/utils.cpp
 	$(CXX) -g -I$(INCDIR) -I$(GMLINCDIR) -c -o $@ $^
 
 $(OBJDIR)/min_spanning_tree.o: $(SRCDIR)/min_spanning_tree.cpp
-	$(CC) -g -I$(INCDIR) -c -o $@ $^
+	$(CXX) -g -I$(INCDIR) -c -o $@ $^
 
 $(OBJDIR)/graph.o: $(SRCDIR)/graph.cpp
 	$(CXX) -g -I$(INCDIR) -I$(GMLINCDIR) -c -o $@ $^
