@@ -205,6 +205,8 @@ public:
 
         std::vector<EdgeIterType>::iterator current;
 
+				std::vector<EdgeIterType>::iterator end;
+
     public:
 
         //no default constructor.
@@ -212,6 +214,7 @@ public:
 
         path_iterator(std::vector<EdgeIterType> es) : path_edges(es) {
             current = path_edges.begin();
+						end = path_edges.end();
         }
 
         path_iterator(const path_iterator& it) : path_edges(it.path_edges) {
@@ -224,11 +227,8 @@ public:
         }
 
         path_iterator operator++(int) {
-            path_iterator tmp(*this);
-            operator++();
-            return tmp;
+            path_iterator tmp(*this); operator++(); return tmp;
         }
-
 
         //throw exception when trying to decrement less than the lower bound
         path_iterator& operator--() {
@@ -239,6 +239,11 @@ public:
         path_iterator operator--(int) {
             path_iterator tmp(*this); operator--(); return tmp;
         }
+
+				bool is_end() {
+						if (current == end) return true;
+						else return false;
+				}
 
         bool operator==(const path_iterator& rhs) {
             return current==rhs.current && path_edges==rhs.path_edges;
