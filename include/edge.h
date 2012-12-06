@@ -14,39 +14,39 @@
 namespace lib {
 
 class Edge {
-	int ordinal;
-	int node1_ord;
-	int node2_ord;
-	AttributeService attribute_service;
+    int ordinal;
+    int node1_ord;
+    int node2_ord;
+    AttributeService attribute_service;
 
 public:
-	Edge() = default;
+    Edge() = default;
 
-	Edge(const Edge &e) = default;
+    Edge(const Edge &e) = default;
 
-	~Edge() = default;
+    ~Edge() = default;
 
-	Edge(int node1_ordinal, int node2_ordinal, int ord);
+    Edge(int node1_ordinal, int node2_ordinal, int ord);
 
-	int get_source_node() {return node1_ord;}
+    int get_source_node() {return node1_ord;}
 
-	int get_destn_node() {return node2_ord;}
+    int get_destn_node() {return node2_ord;}
 
-	int get_ordinal() {return ordinal;}
+    int get_ordinal() {return ordinal;}
 
-	AttributeService& get_attribute_service() {
-		return attribute_service;
-	}
+    AttributeService& get_attribute_service() {
+        return attribute_service;
+    }
 
-	std::pair<int, int>& get_edge() {
-		//TODO:get rid of this naked new
-		std::pair<int, int> *e = new std::pair<int, int>(node1_ord, node2_ord);
-		return *e;
-	}
+    std::pair<int, int>& get_edge() {
+        //TODO:get rid of this naked new
+        std::pair<int, int> *e = new std::pair<int, int>(node1_ord, node2_ord);
+        return *e;
+    }
 
-	//TODO implement >>ostream operator
+    //TODO implement >>ostream operator
 
-	void print_nodes();
+    void print_nodes();
 };
 }
 #endif
