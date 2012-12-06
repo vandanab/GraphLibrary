@@ -22,7 +22,8 @@ std::vector<int> topological_sort(DirectedGraph<T> g) {
     int current_zero_indegree_node_index = -1;
     std::vector<int> topological_order_of_nodes;
 
-    for (auto nodeiter = g.nodes_begin(); nodeiter != g.nodes_end(); nodeiter++) {
+    for
+    (auto nodeiter = g.nodes_begin(); nodeiter != g.nodes_end(); nodeiter++) {
         int node_ordinal = *nodeiter;
         int indegree = g.in_degree(node_ordinal);
         node_indegree[node_ordinal] = indegree;
@@ -34,7 +35,8 @@ std::vector<int> topological_sort(DirectedGraph<T> g) {
         }
     }
 
-    while (current_zero_indegree_node_index < topological_order_of_nodes.size()) {
+    while
+    (current_zero_indegree_node_index < topological_order_of_nodes.size()) {
         auto node_ordinal =
             topological_order_of_nodes[current_zero_indegree_node_index];
 
