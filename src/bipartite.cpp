@@ -1,8 +1,7 @@
 /*
  * bipartite.cpp
  *
- *  Created on: Dec 1, 2012
- *      Author: shiva
+ * Author: GraphLib Team
  */
 
 #include "bipartite.h"

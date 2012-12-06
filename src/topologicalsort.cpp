@@ -1,7 +1,6 @@
 /*
  * topologicalsort.cpp
  *
- *  Created on: Nov 25, 2012
- *      Author:
+ * @author: GraphLib Team
  */
 #include "topologicalsort.h"

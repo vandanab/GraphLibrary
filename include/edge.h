@@ -3,6 +3,7 @@
  * @author: GraphLib Team
  * Edge class representing the edges in the graph structure.
  */
+
 #include<list>
 #include<vector>
 #include<utility>
@@ -10,41 +11,42 @@
 #ifndef EDGE_H
 #define EDGE_H
 
-//IMPORTANT: Should Edge be a templatized class? As of now we don't let the user
-//create an object of edge type or represent edges other than in form of node ordinals?
-
 namespace lib {
-	class Edge {
-		int ordinal;
-		int node1_ord;
-		int node2_ord;
-		AttributeService attribute_service;
-	public:
-		Edge() = default;
-		Edge(const Edge &e) = default;
 
-		~Edge() = default;
+class Edge {
+    int ordinal;
+    int node1_ord;
+    int node2_ord;
+    AttributeService attribute_service;
 
-		Edge(int node1_ordinal, int node2_ordinal, int ord);
+public:
+    Edge() = default;
 
-		int get_source_node() { return node1_ord; }
+    Edge(const Edge &e) = default;
 
-		int get_destn_node() { return node2_ord; }
+    ~Edge() = default;
 
-		int get_ordinal() { return ordinal; }
+    Edge(int node1_ordinal, int node2_ordinal, int ord);
 
-		AttributeService& get_attribute_service() {
-			return attribute_service;
-		}
+    int get_source_node() {return node1_ord;}
 
-		std::pair<int, int>& get_edge() {
-			//TODO:get rid of this naked new
-			std::pair<int, int> *e = new std::pair<int, int>(node1_ord, node2_ord);
-			return *e;
-		}
+    int get_destn_node() {return node2_ord;}
 
-		//instead implement >>ostream operator
-		void print_nodes();
-	};
+    int get_ordinal() {return ordinal;}
+
+    AttributeService& get_attribute_service() {
+        return attribute_service;
+    }
+
+    std::pair<int, int>& get_edge() {
+        //TODO:get rid of this naked new
+        std::pair<int, int> *e = new std::pair<int, int>(node1_ord, node2_ord);
+        return *e;
+    }
+
+    //TODO implement >>ostream operator
+
+    void print_nodes();
+};
 }
 #endif

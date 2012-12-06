@@ -1,8 +1,7 @@
 /*
  * depthfirstsearch.h
  *
- *  Created on: Nov 25, 2012
- *      Author:
+ * @author: GraphLib Team
  */
 
 #ifndef DEPTHFIRSTTRAVERSAL_H_
@@ -18,7 +17,7 @@
 namespace lib {
 
 /**
- * These methods assume no cycles in given graph.
+ * These methods assume no cycles in given graph and the graph is connected.
  */
 
 template<class T>
@@ -35,9 +34,9 @@ std::vector<int> depthfirsttraversal(T g, int node_ordinal) {
     while (!nodestack.empty()) {
         int current_node = nodestack.top();
         nodestack.pop();
-        auto findvalue =
-            std::find(dfsnodes.begin(), dfsnodes.end(), current_node);
-        if(findvalue != dfsnodes.end()) {
+        auto findvalue = std::find(dfsnodes.begin(), dfsnodes.end(),
+                current_node);
+        if (findvalue != dfsnodes.end()) {
             continue;
         }
         dfsnodes.push_back(current_node);
@@ -48,7 +47,6 @@ std::vector<int> depthfirsttraversal(T g, int node_ordinal) {
         }
     }
     return dfsnodes;
-
 }
 }
 
