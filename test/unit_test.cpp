@@ -305,8 +305,10 @@ void test_min_spanning_tree() {
     std::cout << "testing min spanning tree..." << std::endl;
     g1.print();
 
-    lib::minimum_spanning_tree(g1);
-
+    std::vector<int> edges_of_mst = lib::minimum_spanning_tree(g1);
+    for (int c1 = 0; c1 != edges_of_mst.size(); c1++) {
+        std::cout << edges_of_mst[c1] << std::endl;
+    }
 }
 
 void test_simple_path() {

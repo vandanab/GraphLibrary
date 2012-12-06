@@ -50,7 +50,7 @@ public:
 };
 
 template<class T>
-void minimum_spanning_tree(UndirectedGraph<T> g) {
+std::vector<int> minimum_spanning_tree(UndirectedGraph<T> g) {
 
     std::vector<int> v;
     std::vector<QueueNode> node_queue;
@@ -94,11 +94,12 @@ void minimum_spanning_tree(UndirectedGraph<T> g) {
         }
     }
 
+    std::vector<int> edges_of_mst;
     for (auto c1 = g.nodes_begin(); c1 != g.nodes_end(); c1++) {
-        std::cout << *c1 << " parent_node:"
-            << g.get_node_attribute(*c1, "parent") << " parent_edge:"
-            << g.get_node_attribute(*c1, "parent_edge") << std::endl;
+        int edgeordinal = g.get_node_attribute(*c1, "parent_edge");
+        if(edgeordinal != -1) edges_of_mst.push_back(edgeordinal);
     }
+    return edges_of_mst;
 }
 }
 #endif
