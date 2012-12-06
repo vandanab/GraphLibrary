@@ -3,6 +3,7 @@
  * @author: GraphLib Team
  * Node class representing the nodes of the graph structure.
  */
+
 #include<list>
 #include<string>
 #include<vector>
@@ -16,109 +17,89 @@
 #define NODE_H
 
 namespace lib {
-	template<class T>
-	class Node {
-		int ordinal;
-		T val;
-		AttributeService attribute_service;
-		std::vector<int> in_edges;
-		std::vector<int> out_edges;
-	public:
-		Node() = default;
+template<class T>
+class Node {
+    int ordinal;
+    T val;
+    AttributeService attribute_service;
+    std::vector<int> in_edges;
+    std::vector<int> out_edges;
 
-		//move constructor
-		Node(Node<T>&&) = default;
-		Node<T>& operator=(Node<T>&&) = default;
-		//copy constructor
-		Node(const Node<T> &n) = default;
-		Node<T>& operator=(Node<T> const&) = default;
+public:
+    Node() = default;
 
-		//actual value constructor
-		Node(const T &n, int ord) : attribute_service(), in_edges(0), out_edges(0), val(n), ordinal(ord) {}
-	
-		~Node() = default;
-		//void update_edges(list<Edge<T> >::iterator it);
-		void add_in_edge(int edge_ordinal) {
-			in_edges.push_back(edge_ordinal);
-		}
-		void add_out_edge(int edge_ordinal) {
-			out_edges.push_back(edge_ordinal);
-		}
+    //move constructor
+    Node(Node<T>&&) = default;
 
-		void update_node(T n) { val = n.val; }
+    Node<T>& operator=(Node<T>&&) = default;
 
-		void delete_in_edge(int edge_ordinal) {
-			for(int i = 0; i < in_edges.size(); i++) {
-				if(in_edges[i] == edge_ordinal) {
-					in_edges.erase(in_edges.begin() + i);
-				}
-			}
-		}
+    //copy constructor
+    Node(const Node<T> &n) = default;
 
-		void delete_out_edge(int edge_ordinal) {
-			for(int i = 0; i < out_edges.size(); i++) {
-				if(out_edges[i] == edge_ordinal)
-					out_edges.erase(out_edges.begin() + i);
-			}
-		}
+    Node<T>& operator=(Node<T> const&) = default;
 
-		AttributeService& get_attribute_service() {
-			return attribute_service;
-		}
+    //actual value constructor
+    Node(const T &n, int ord) :
+        attribute_service(), in_edges(0), out_edges(0), val(n), ordinal(ord) {}
 
-		std::vector<int> get_in_edges() { return in_edges; }
+    ~Node() = default;
 
-		std::vector<int> get_out_edges() { return out_edges; }
+    //void update_edges(list<Edge<T> >::iterator it);
+    void add_in_edge(int edge_ordinal) {
+        in_edges.push_back(edge_ordinal);
+    }
 
-		T& get_val() { return val; }
+    void add_out_edge(int edge_ordinal) {
+        out_edges.push_back(edge_ordinal);
+    }
 
-		bool operator==(const Node &other) const;
+    void update_node(T n) {val = n.val;}
 
-		int get_ordinal() { return ordinal; }
+    void delete_in_edge(int edge_ordinal) {
+        for(int i = 0; i < in_edges.size(); i++) {
+            if(in_edges[i] == edge_ordinal) {
+                in_edges.erase(in_edges.begin() + i);
+            }
+        }
+    }
 
-		void print();
-	};
+    void delete_out_edge(int edge_ordinal) {
+        for(int i = 0; i < out_edges.size(); i++) {
+            if(out_edges[i] == edge_ordinal)
+            out_edges.erase(out_edges.begin() + i);
+        }
+    }
 
-	/*
-	template<class T>
-	//this constructor should not be allowed
-	//basically a node without a value is useless
-	Node<T>::Node() : attributes(0), in_edges(0), out_edges(0){
-	}
+    AttributeService& get_attribute_service() {
+        return attribute_service;
+    }
 
-	template<class T>
-	Node<T>::Node(const Node<T> &n) {
-		val = n.val;
-		attributes = n.attributes;
-		my_edges = n.my_edges;
-		ordinal = n.ord;
-	}
+    std::vector<int> get_in_edges() {return in_edges;}
 
-	template<class T>
-	Node<T>::~Node() {}
-	*/
+    std::vector<int> get_out_edges() {return out_edges;}
 
-	//define == operator based on the user object equal
-	template<class T>
-	bool Node<T>::operator==(const Node &other) const {
-		//do we need to check for equal attributes too?
-		return val == other.val && ordinal == other.ordinal;
-	}
+    T& get_val() {return val;}
 
-	template<class T>
-	void Node<T>::print() {
-		//we have to find a way to print edges now.
-		//std::vector<std::list<Edge>::iterator>::iterator it;
-		std::cout << val << " -> ";
-		/*
-		for(it = inEdges.begin(); it != inEdges.end(); it++) {
-			(*(*it)).print_nodes();
-		}
-		for(it = outEdges.begin(); it != outEdges.end(); it++) {
-			(*(*it)).print_nodes();
-		}*/
-		std::cout << std::endl;
-	}
+    bool operator==(const Node &other) const;
+
+    int get_ordinal() {return ordinal;}
+
+    void print();
+};
+
+//define == operator based on the user object equal
+template<class T>
+bool Node<T>::operator==(const Node &other) const {
+    //do we need to check for equal attributes too?
+    return val == other.val && ordinal == other.ordinal;
+}
+
+template<class T>
+void Node<T>::print() {
+
+    std::cout << val << " -> ";
+    std::cout << std::endl;
+}
 
 }
 #endif
