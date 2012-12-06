@@ -7,7 +7,7 @@
 #include "gml_parser.h"
 
 namespace lib {
-	Graph<int> import_gml(std::string filename) {
+	Graph<int> import_gml(const std::string filename) {
 		lib::Graph<int> g;
 		std::unordered_map<long, int> id_ordinal_map;
 
@@ -55,7 +55,7 @@ namespace lib {
 									}
 									list2 = list2->next;
 								}
-								if (src_node > 0 && dest_node > 0) {
+								if (src_node >= 0 && dest_node >= 0) {
 									g.add_edge(src_node, dest_node);
 								}
 							}
