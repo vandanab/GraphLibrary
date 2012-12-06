@@ -3,15 +3,13 @@
  * @author: GraphLib Team
  * Edge class representing the edges in the graph structure.
  */
+
 #include<list>
 #include<vector>
 #include<utility>
 #include "attribute_service.h"
 #ifndef EDGE_H
 #define EDGE_H
-
-//IMPORTANT: Should Edge be a templatized class? As of now we don't let the user
-//create an object of edge type or represent edges other than in form of node ordinals?
 
 namespace lib {
 	class Edge {

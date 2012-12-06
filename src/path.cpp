@@ -1,6 +1,6 @@
 /**
  * path.cpp provides algorithms related to paths in graphs
- * 
+ * @author: GraphLib Team
  * 
  */
 

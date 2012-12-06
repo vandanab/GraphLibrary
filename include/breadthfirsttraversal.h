@@ -1,8 +1,7 @@
 /*
  * breadthfirstsearch.h
  *
- *  Created on: Nov 25, 2012
- *      Author:
+ * @author: GraphLib Team
  */
 
 #ifndef BREADTHFIRSTTRAVERSAL_H_
@@ -18,7 +17,8 @@
 namespace lib {
 
 /**
- * These methods assume no cycles in given graph.
+ * These methods assume no cycles in given graph and that the graph is
+ * connected.
  */
 
 template<class T>
@@ -35,9 +35,10 @@ std::vector<int> breadthfirsttraversal(T g, int node_ordinal) {
     while (!nodequeue.empty()) {
         int current_node = nodequeue.front();
         nodequeue.pop();
-        auto findvalue =
-            std::find(bfsnodes.begin(), bfsnodes.end(), current_node);
-        if(findvalue != bfsnodes.end()) {
+        auto findvalue = std::find(bfsnodes.begin(), bfsnodes.end(),
+            current_node);
+
+        if (findvalue != bfsnodes.end()) {
             continue;
         }
         bfsnodes.push_back(current_node);
