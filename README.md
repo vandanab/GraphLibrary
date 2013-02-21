@@ -28,3 +28,6 @@ code editing guidelines (http://google-styleguide.googlecode.com/svn/trunk/cppgu
 3. try to keep lines of 80 characters, move extra code to next line with an extra indent (moving code to next line requires care).<br>
 4. function/class beginning parenthesis ({) at the end of the function signature instead of the next line<br>
 5. standard header file includes before self defined header file includes<br>
+
+NOTE: Most of the code is in .h files instead of .cpp because of the problem with C++ templatized classes which does not allow templatized implementation in .cpp.
+http://stackoverflow.com/questions/6807369/undefined-reference-to-constructor-generic-class?rq=1
